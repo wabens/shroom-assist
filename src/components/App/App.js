@@ -11,10 +11,10 @@ import {connect} from 'react-redux';
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
+import ProtectedRoute from '../LogInComponents/ProtectedRoute/ProtectedRoute'
 
 import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
+import UserPage from '../LogInComponents/UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
 
 import './App.css';
@@ -22,6 +22,9 @@ import './App.css';
 class App extends Component {
   componentDidMount () {
     this.props.dispatch({type: 'FETCH_USER'})
+    this.props.dispatch({type: 'GET_GROWING_ROOM'})
+    this.props.dispatch({type: 'GET_INCUBATOR'})
+    
   }
 
   render() {
