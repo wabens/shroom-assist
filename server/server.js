@@ -9,7 +9,9 @@ const sessionMiddleware = require('./modules/session-middleware');
 const passport = require('./strategies/user.strategy');
 
 // Route includes
-const userRouter = require('./routes/user.router');
+const userRouter = require('./routes/user.router'); // user information
+const taskRouter = require('./routes/task.router'); // handles tasks
+const processRouter = require('./routes/process.router'); // handles process, in this case mushroom growing
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -24,6 +26,9 @@ app.use(passport.session());
 
 /* Routes */
 app.use('/api/user', userRouter);
+app.use('/api/task', taskRouter);
+app.use('/api/process', processRouter)
+
 
 // Serve static files
 app.use(express.static('build'));
