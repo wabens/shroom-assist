@@ -22,6 +22,7 @@ class TableDrawer extends Component {
       column: 0,
       active: false,
     },
+    table:''
   }
 
   toggleDrawer = () => {
@@ -31,10 +32,20 @@ class TableDrawer extends Component {
   }
 
   fetchDataTable = (table) => {
-    let data = this.props.reduxState.incubatorData;
-    console.log(`fetch data `, data);
+    let data = '';
+    if (table==='incubatorData'){
+      data = this.props.reduxState.incubatorData;
+      console.log(`fetch data `, data);
+      this.listToIndex(data);
+    }
+    else if (table==='growingRoomData'){
+      data = this.props.reduxState.growingRoomData
+      this.listToIndex(data);
+    };
+    this.setState({
+      table: table
+    });
     
-    this.listToIndex(data)
   }
   
   // Called when the drawer is opened and table is selected
@@ -95,7 +106,7 @@ class TableDrawer extends Component {
             })
         }
         else if(this.state.sort.direction==='DESC'){
-            this.fetchDataTable()
+            this.fetchDataTable(this.state.table)
             this.setState({
                 sort: {
                 direction: '',

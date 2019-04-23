@@ -8,7 +8,7 @@ function* getGrowingRoom(action) {
     console.log(`growing room `, response);
     
     // set table to redux state
-    //yield put({ type: 'SET_GROWING_ROOM', payload: response.data });
+    yield put({ type: 'SET_GROWING_ROOM', payload: response.data });
     
   } catch (error) {
       console.log('Error getting growing room data', error);
