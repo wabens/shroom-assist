@@ -154,11 +154,7 @@ class SmartTable extends Component {
     console.log(`state position `, this.state.position);
     let list = this.props.dataSet;
     // console.log(`list render`, list[1]);
-    if(list[1]===undefined){
-      return(
-        null
-      )
-    }else{
+    if(list&&list[1]){
       return (
         <AutoSizer>
         {({ height, width }) => (
@@ -182,7 +178,12 @@ class SmartTable extends Component {
         )}
         </AutoSizer>
       )
-  }
+    }
+    else{
+      return(
+        null
+      )
+    }
   }   
 }
 

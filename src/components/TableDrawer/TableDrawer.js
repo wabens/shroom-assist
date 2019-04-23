@@ -95,8 +95,7 @@ class TableDrawer extends Component {
             })
         }
         else if(this.state.sort.direction==='DESC'){
-            list = this.fetchDataTable
-            list.unshift(columnNames)
+            this.fetchDataTable()
             this.setState({
                 sort: {
                 direction: '',
