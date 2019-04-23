@@ -91,10 +91,10 @@ class SmartTable extends Component {
         <AutoSizer>
         {({ height, width }) => (
           <MultiGrid
-            columnCount={20}
+            columnCount={list[0].length}
             columnWidth={100}
             height={height}
-            rowCount={1931}
+            rowCount={list.length}
             rowHeight={50}
             width={width}
             fixedColumnCount={1}

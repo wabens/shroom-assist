@@ -43,6 +43,11 @@ class TableDrawer extends Component {
       this.listToIndex(data);
     };
     this.setState({
+      sort:{
+        direction: '',
+        column: 0,
+        active: false,
+      },
       table: table
     });
     
