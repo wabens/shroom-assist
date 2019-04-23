@@ -1,4 +1,4 @@
-const incubatorData = (state = [], action) => {
+const incubatorData = (state = [{init:'LOADING'}], action) => {
     if (action.type === 'SET_INCUBATOR') {
         console.log(`in incubator reducer `);
 
