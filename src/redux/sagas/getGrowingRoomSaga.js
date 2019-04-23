@@ -8,10 +8,10 @@ function* getGrowingRoom(action) {
     console.log(`growing room `, response);
     
     // set table to redux state
-    //yield put({ type: 'LOGIN', payload: action.payload });
+    yield put({ type: 'SET_GROWING_ROOM', payload: response });
     
   } catch (error) {
-      console.log('Error getting data', error);
+      console.log('Error getting growing room data', error);
       alert('Sorry error getting data.')
   }
 }
