@@ -3,6 +3,9 @@ import Drawer from '@material-ui/core/Drawer';
 import SmartTable from '../SmartTable/SmartTable';
 import './TableDrawer.css';
 import { connect } from 'react-redux';
+import sort from 'fast-sort'; // to sort columns
+import { List } from '@material-ui/core';
+
 
 
 // holds the data table
@@ -13,6 +16,12 @@ class TableDrawer extends Component {
   state= {
     open: false,
     dataSet: [],
+    columnNames:[],
+    sort:{
+      direction: '',
+      column: 0,
+      active: false,
+    },
   }
 
   toggleDrawer = () => {
@@ -28,7 +37,6 @@ class TableDrawer extends Component {
     this.listToIndex(data)
   }
   
-
   // Called when the drawer is opened and table is selected
   // Grid component within smartTable requires a 2d array as opposed to an array of objects
   // listToIndex pulls the keys off of the first object in the given data set
@@ -49,9 +57,56 @@ class TableDrawer extends Component {
     
     this.setState({
         dataSet: tableData,
+        columnNames: objectKeys,
     })
-    
   };
+
+    handleSort = (column) =>{
+        let list = this.state.dataSet;
+        list.shift();
+        let columnNames=this.state.columnNames
+        if(this.state.sort.direction===''){
+            console.log(`pre sorted data `, list);
+            console.log(`column names `, this.state.columnNames);
+            
+            sort(list).asc(l=>l[column]);
+            list.unshift(this.state.columnNames);
+            console.log(`sorted `, list);
+            this.setState({
+                sort: {
+                    direction: 'ASC',
+                    column,
+                    active: true,
+                },
+                dataSet: list
+             })
+        }
+        else if(this.state.sort.direction==='ASC'){
+            sort(list).desc(l=>l[column]);
+            list.unshift(this.state.columnNames)
+            console.log(`sorted `, list);
+            this.setState({
+                sort: {
+                    direction: 'DESC',
+                    column,
+                    active: true
+                },
+                dataSet: list
+            })
+        }
+        else if(this.state.sort.direction==='DESC'){
+            list = this.fetchDataTable
+            list.unshift(columnNames)
+            this.setState({
+                sort: {
+                direction: '',
+                column: 0,
+                active: false,
+            }
+        })
+        }
+
+  }
 
 
 
@@ -67,7 +122,7 @@ class TableDrawer extends Component {
             <button onClick={()=>this.fetchDataTable('incubatorData')}>Incubator</button>
             <button onClick={()=>this.fetchDataTable('growingRoomData')}>Growing Room</button>
 
-            <SmartTable dataSet = {this.state.dataSet}/>
+            <SmartTable handleSort={this.handleSort} sort={this.state.sort} dataSet = {this.state.dataSet}/>
           </div>
         </Drawer>
     </section>

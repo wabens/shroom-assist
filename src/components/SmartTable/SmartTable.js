@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { MultiGrid, AutoSizer } from 'react-virtualized';
 import './SmartTable.css'
 import 'react-virtualized/styles.css'; // only needs to be imported once
-import sort from 'fast-sort'; // to sort columns
 
 const incubatorData = require('../../data.modules/incubatorData')
 
@@ -26,11 +25,7 @@ const incubatorData = require('../../data.modules/incubatorData')
 class SmartTable extends Component {
 
   state={
-    sort:{
-      direction: '',
-      column: 0,
-      active: false,
-    },
+
     position:{
       row: null,
       column: null,
@@ -94,46 +89,49 @@ class SmartTable extends Component {
 
   componentDidMount(){
     console.log(`smartTable props`, this.props);
+    console.log(`renderSet `, this.state.renderSet);
+
   }
 
   cellRenderer = ({ columnIndex, key, rowIndex, style }) => {
     let list = this.props.dataSet;
-    console.log(`list in cellrenderer `, list);
+    // console.log(`list in cellrenderer `, list);
+    // console.log(`renderSet `, this.state.renderSet);
     
     let cellStyle = 'dataCell';
     // checks position of selected data cell against current rendering cell
     // changes style if selected for highlight effect
-    // if(columnIndex===this.state.position.column && rowIndex===this.state.position.row){
-    //   cellStyle ='selectCell';
-    // }
+    if(columnIndex===this.state.position.column && rowIndex===this.state.position.row){
+      cellStyle ='selectCell';
+    }
 
-    // if(rowIndex===0){ // if columnHead (row 0), render button
-    //   if(this.state.sort.active===true && this.state.sort.column===columnIndex){
-    //     console.log(`in sorted column `, this.state.sort);
-    //     return(
-    //       <div
-    //         key={key}
-    //         style={style}
-    //         className={'headerCell'}
-    //       >
-    //         <button onClick={()=>this.handleSort(columnIndex)}>{this.state.sort.direction}</button>
-    //         {list[rowIndex][columnIndex]}
-    //       </div>
-    //     )
-    //   }
-    //   else{
-    //     return(
-    //       <div
-    //         key={key}
-    //         style={style}
-    //         className={'headerCell'}
-    //       >
-    //         <button onClick={()=>this.handleSort(columnIndex)}></button>
-    //         {list[rowIndex][columnIndex]}
-    //       </div>
-    //     )
-    //   }
-    // }else{  // normal data cell
+    if(rowIndex===0){ // if columnHead (row 0), render button
+      if(this.props.sort.active===true && this.props.sort.column===columnIndex){
+        // console.log(`in sorted column `, this.props.sort);
+        return(
+          <div
+            key={key}
+            style={style}
+            className={'headerCell'}
+          >
+            <button onClick={()=>this.props.handleSort(columnIndex)}>{this.props.sort.direction}</button>
+            {list[rowIndex][columnIndex]}
+          </div>
+        )
+      }
+      else{
+        return(
+          <div
+            key={key}
+            style={style}
+            className={'headerCell'}
+          >
+            <button onClick={()=>this.props.handleSort(columnIndex)}></button>
+            {list[rowIndex][columnIndex]}
+          </div>
+        )
+      }
+    }else{  // normal data cell
       //console.log(`rowIndex, columnIndex, list`, rowIndex, columnIndex, list);
       //console.log(`list position `, list[rowIndex][columnIndex]);
       
@@ -147,15 +145,15 @@ class SmartTable extends Component {
           {list[rowIndex][columnIndex]}
         </div>
       )  
-    // }
+    }
   }
 
   render() {
-    console.log(`smartTable props`, this.props.dataSet);
-
+    // console.log(`smartTable props`, this.props.dataSet);
+    
     console.log(`state position `, this.state.position);
     let list = this.props.dataSet;
-    console.log(`list render`, list[1]);
+    // console.log(`list render`, list[1]);
     if(list[1]===undefined){
       return(
         null
