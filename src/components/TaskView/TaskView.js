@@ -1,25 +1,37 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Grid from '@material-ui/core/Grid';
+import TaskItem from './TaskItem';
+import './TaskView.css';
 
 
 class TaskView extends Component {
 
 
+    getTaskInfo=() => {
+        this.props.dispatch({type: "GET_TASK_LIST"});
+        this.props.dispatch({type: "GET_TARGET_LIST"});
+        this.props.dispatch({type: "GET_CONSTRAINT_LIST"});
+
+    }
     
     componentDidMount(){
-        this.props.dispatch({type: "GET_TASK_LIST"})
-        this.props.dispatch({type: "GET_TARGET_LIST"})
-        this.props.dispatch({type: "GET_CONSTRAINT_LIST"})
+        this.getTaskInfo()
     }
     render(){
+        console.log(`reduxstate`, this.props.reduxState);
+        let taskInfo = this.props.reduxState.taskInfo
+        
+        
         return(
             <section>
                 <h1>Tasks</h1>
-                <Grid container>
-                    
-                </Grid>
+                <div className={'task-list'}>
+                    {taskInfo.taskList.map( task => 
+                            <TaskItem task={task} taskInfo={taskInfo}/>
+                    )}
+                </div>
+
             </section>
         )
     }
