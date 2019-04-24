@@ -8,7 +8,7 @@ function* getIncubator(action) {
     console.log(`incubator `, response);
     
     // set table to redux state
-    yield put({ type: 'SET_INCUBATOR', payload: response });
+    yield put({ type: 'SET_INCUBATOR', payload: response.data });
     
   } catch (error) {
       console.log('Error getting data', error);
