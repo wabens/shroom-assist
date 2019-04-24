@@ -6,37 +6,45 @@ import './TaskView.css';
 
 class TaskItem extends Component {
 
-    state={
-        targetEl:'',
-    }
 
     findTargets = ()=>{
-        let targetEl=[];
+        let taskTargets=[];
         let targetList = (this.props.taskInfo.targetList)
-        console.log(`findtargets `, targetList);
 
         for (let target of targetList){
             console.log(`target`, target);
             
             if (target.task_id === this.props.task.task_id){
                 console.log(`set targetEL `);
-                targetEl.push(<p>{target.target_table}, {target.modification}</p>)
+                //targetEl.push(<p>{target.target_table}, {target.modification}</p>)
+                taskTargets.push(target)
             }
         }
-        return targetEl
+        return taskTargets
     }
 
-    componentDidMount(){
+    handleComplete = (taskTargets) => {
+        for (target of taskTargets){
+            if (target.modification==='POST'){
+                this.props.dispatch({type: 'TARGET_POST', payload: target})
+            }
+            else if (target.modification==='PUT'){
+                this.props.dispatch({type: 'TARGET_PUT', payload: target})
+
+            }
+        }
     }
 
     render(){
-        let targetEl=this.findTargets()
-        
+        let taskTargets=this.findTargets();
+
         return(
             <div className={'task-item'}>
                 <p>{this.props.task.task_name}</p>
                 <p>{this.props.task.description}</p>
-                {targetEl}
+                {taskTargets.map( target => 
+                <p>{target.target_table}, {target.modification}</p>)}
+                <button onCLick={()=>this.handleComplete(taskTargets)}>Complete</button>
             </div>
         )
     }
