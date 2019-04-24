@@ -53,9 +53,12 @@ CREATE TABLE "task"
 
 
                 -------------------------------------TEST CASES-------------------------------------
---Test 1: Tests a task completion resulting in a POST. Uses two constraints to activate 
+--Data download date is approximatley 4/15/19
+
+--Test 1: Tests a task completion resulting in a POST, and a PUT. Uses two constraints to activate 
 INSERT INTO "task" ("task_name", "description", "create_date", "active", "creator")
-VALUES ('Incubator to growing room', 'find pallets older than 30 days from the incubator, and transfer to carts in the growing room', current_timestamp, 'false', '1');
+VALUES ('Incubator to growing room', 'find pallets older than 30 days from the incubator, and 
+transfer to carts in the growing room', current_timestamp, 'false', '1');
 
 INSERT INTO "constraint" ("task_id", "constraint_value", "constraint_table", "constraint_column", "constraint_statement")
 VALUES ('1', true, 'incubator', 'active', '=');
@@ -64,4 +67,8 @@ INSERT INTO "constraint" ("task_id", "constraint_value", "constraint_table", "co
 VALUES ('1', '30', 'incubator', 'pallet_age', '>=');
 
 INSERT INTO "target" ("task_id", "target_table", "modification_value", "modification", "target_complete")
-VALUES ('1', 'growing_room','{cart_name: 1000, start_date: current_timestamp, pallet: "100A, 101B, 101C", first_room: 1, second_room: null, second_transfer: null, compost_date: null, notes: '', active: true}', 'POST', 'false');
+VALUES ('1', 'growing_room','{cart_name: 1000, start_date: current_timestamp, pallet: "100A, 101B, 101C", first_room: 1, 
+second_room: null, second_transfer: null, compost_date: null, notes: '', active: true}', 'POST', 'false');
+
+INSERT INTO "target" ("task_id", "target_table", "modification_value", "modification", "target_complete")
+VALUES ('1', 'incubate', '{active: false}', 'PUT', 'false');

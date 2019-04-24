@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import Drawer from '@material-ui/core/Drawer';
+
 import SmartTable from '../SmartTable/SmartTable';
 import './TableDrawer.css';
-import { connect } from 'react-redux';
+
 import sort from 'fast-sort'; // to sort columns
-import { List } from '@material-ui/core';
 
 
 
