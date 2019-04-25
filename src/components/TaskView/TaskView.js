@@ -31,7 +31,7 @@ class TaskView extends Component {
                             <TaskItem task={task} taskInfo={taskInfo}/>
                     )}
                 </div>
-
+                {JSON.stringify()}
             </section>
         )
     }

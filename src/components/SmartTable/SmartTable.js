@@ -11,18 +11,24 @@ class SmartTable extends Component {
     position:{
       row: null,
       column: null,
+      selectJSON: null
     },
-    renderSet: this.props.dataSet,
   }
   
   handleDataClick = (row, column) => {    
     console.log(`position `, row, column);
+    console.log(`select row`, this.props.dataSet[row]);
+    
+    let selectJSON = this.selectJSON(this.props.dataSet[row]);
+
     this.setState({
       position:{
         row,
         column,
+        selectJSON,
       }
-    })    
+    })
+    
   }
 
   cellRenderer = ({ columnIndex, key, rowIndex, style }) => {
@@ -80,12 +86,27 @@ class SmartTable extends Component {
     }
   }
 
+  selectJSON = (rowArray) => {
+    let rowObject = {};
+    let columnNames = this.props.dataSet[0];
+    for(let i=0; i<rowArray.length; i++){
+      rowObject={
+        ...rowObject,
+        [columnNames[i]]: rowArray[i],
+      }
+    }
+    rowObject = JSON.stringify(rowObject)
+    return rowObject
+  }
+
+
   render() {
     // console.log(`smartTable props`, this.props.dataSet);
     
     console.log(`state position `, this.state.position);
     let list = this.props.dataSet;
-    // console.log(`list render`, list[1]);
+    console.log(`selected row`, list[this.state.position.row]);
+    
     if(list&&list[1]){
       return (
         <AutoSizer>

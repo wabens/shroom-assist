@@ -17,7 +17,7 @@ CREATE TABLE "target"
     "target_table" VARCHAR (100),
     "target_row_id" INTEGER,
     "target_column" VARCHAR (100),
-    "modification_value" VARCHAR (2000),
+    "modification_value" JSON,
     -- object, each key is a column, one key for put, many for POST
     "modification" VARCHAR(50),
     -- PUT or POST
@@ -67,8 +67,7 @@ INSERT INTO "constraint" ("task_id", "constraint_value", "constraint_table", "co
 VALUES ('1', '30', 'incubator', 'pallet_age', '>=');
 
 INSERT INTO "target" ("task_id", "target_table", "modification_value", "modification", "target_complete")
-VALUES ('1', 'growing_room','{cart_name: 1000, start_date: current_timestamp, pallet: "100A, 101B, 101C", first_room: 1, 
-second_room: null, second_transfer: null, compost_date: null, notes: '', active: true}', 'POST', 'false');
+VALUES ('1', 'growing_room','{"cart_name":1000,"start_date":"","pallet":"100A, 101B, 101C","first_room":1,"second_room":null,"second_transfer":null,"compost_date":null,"notes":"","active":true}', 'POST', 'false');
 
 INSERT INTO "target" ("task_id", "target_table", "modification_value", "modification", "target_complete")
-VALUES ('1', 'incubate', '{active: false}', 'PUT', 'false');
+VALUES ('1', 'incubate', '{"active": false}', 'PUT', 'false');

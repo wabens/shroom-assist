@@ -18,18 +18,15 @@ function* postTarget(action) {
 }
 
 function* putTarget(action) {
-    console.log(`put table mod`, action.payload);
+    try { 
+        console.log(`put table mod`, action.payload);
+        yield axios.put('api/process/growing_room', action.payload);
     
-//   try {
-//     let response = yield axios.get('api/task/target');
-//     console.log(`targetList `, response);
-    
-//     yield put({ type: 'SET_TARGET_LIST', payload: response.data });
-    
-//   } catch (error) {
-//       console.log('Error getting target list', error);
-//       alert('Sorry error getting data.')
-//   }
+    } catch (error) {
+      console.log('Error PUT target modification', error);
+      alert('Sorry error sending data.')
+    }
+
 }
 
 function* getTaskInfoSaga() {

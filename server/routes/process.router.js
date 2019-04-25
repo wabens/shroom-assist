@@ -42,25 +42,30 @@ router.put('/incubator', (req, res) => {
         });
 });
 
-router.post('/growing_room', (req, res) => {
-    let target = req.body;
-    //let table = req.params;
-    // let table = 'growing_room';
+router.post('/:process', (req, res) => {
+    let target = req.body.modification_value;
+    
+    let table = req.params.process;
+    
     console.log(`req.body `, target);
-    // let queryText = '';
-    // let queryValues = [];
-    // if (table==='growing_room'){
-        let queryText=`INSERT INTO "growing_room" ("cart_name", "start_date", "pallet", "first_room",
+    console.log(`req.params`, req.params);
+    
+    let queryText = '';
+    let queryValues = [];
+    if (table==='growing_room'){
+        console.log(`added to growing_room `);
+
+        queryText=`INSERT INTO "growing_room" ("cart_name", "start_date", "pallet", "first_room",
                             "second_room", "second_transfer", "compost_date", "notes", "active")
                             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
-        let queryValues = [target.cart_name, target.start_date, target.pallet, target.first_room, target.second_room,
+        queryValues = [target.cart_name, target.start_date, target.pallet, target.first_room, target.second_room,
                                 target.second_transfer, target.compost_date, target.notes, target.active];
-    // }
+    }
 
     pool.query(queryText, queryValues)
         .then((result) => {
             res.sendStatus(201);
-            console.log(`added to growing_room `);
+            console.log(`added to process table `, queryValues);
 
         })
         .catch((err) => {
