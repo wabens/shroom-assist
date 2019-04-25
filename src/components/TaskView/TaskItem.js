@@ -24,14 +24,14 @@ class TaskItem extends Component {
     }
 
     handleComplete = (taskTargets) => {
-        for (target of taskTargets){
+        for (let target of taskTargets){
             if (target.modification==='POST'){
                 this.props.dispatch({type: 'TARGET_POST', payload: target})
             }
-            else if (target.modification==='PUT'){
-                this.props.dispatch({type: 'TARGET_PUT', payload: target})
+            // else if (target.modification==='PUT'){
+            //     this.props.dispatch({type: 'TARGET_PUT', payload: target})
 
-            }
+            // }
         }
     }
 
@@ -44,7 +44,7 @@ class TaskItem extends Component {
                 <p>{this.props.task.description}</p>
                 {taskTargets.map( target => 
                 <p>{target.target_table}, {target.modification}</p>)}
-                <button onCLick={()=>this.handleComplete(taskTargets)}>Complete</button>
+                <button onClick={()=>this.handleComplete(taskTargets)}>Complete</button>
             </div>
         )
     }

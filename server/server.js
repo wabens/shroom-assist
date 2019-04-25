@@ -17,7 +17,7 @@ const processRouter = require('./routes/process.router'); // handles process, in
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Passport Session Configuration //
+// Passport Session Configuration 
 app.use(sessionMiddleware);
 
 // start up passport sessions

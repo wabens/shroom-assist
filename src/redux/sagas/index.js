@@ -4,7 +4,8 @@ import registrationSaga from './registrationSaga';
 import userSaga from './userSaga';
 import getGrowingRoomSaga from './getGrowingRoomSaga';
 import getIncubatorSaga from './getIncubatorSaga';
-import taskInfoSaga from './taskInfoSaga'
+import taskInfoSaga from './taskInfoSaga';
+import targetModificationSaga from './targetModificationSaga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -21,5 +22,6 @@ export default function* rootSaga() {
     getGrowingRoomSaga(),
     getIncubatorSaga(),
     taskInfoSaga(),
+    targetModificationSaga()
   ]);
 }

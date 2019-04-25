@@ -8,33 +8,33 @@ import axios from 'axios';
 // the .modification_value contains a stringified object with the values
 function* postTarget(action) {
   try { 
-    let response = yield axios.POST('api/proccess/');
-    console.log(`taskList `, response);
-    
-    yield put({ type: 'SET_TASK_LIST', payload: response.data });
+    console.log(`post table mod`, action.payload);
+    yield axios.post('api/process/growing_room', action.payload);
     
   } catch (error) {
-      console.log('Error getting task data', error);
-      alert('Sorry error getting data.')
+      console.log('Error posting target modification', error);
+      alert('Sorry error sending data.')
   }
 }
 
 function* putTarget(action) {
-  try {
-    let response = yield axios.get('api/task/target');
-    console.log(`targetList `, response);
+    console.log(`put table mod`, action.payload);
     
-    yield put({ type: 'SET_TARGET_LIST', payload: response.data });
+//   try {
+//     let response = yield axios.get('api/task/target');
+//     console.log(`targetList `, response);
     
-  } catch (error) {
-      console.log('Error getting target list', error);
-      alert('Sorry error getting data.')
-  }
+//     yield put({ type: 'SET_TARGET_LIST', payload: response.data });
+    
+//   } catch (error) {
+//       console.log('Error getting target list', error);
+//       alert('Sorry error getting data.')
+//   }
 }
 
 function* getTaskInfoSaga() {
-  yield takeLatest('GET_TASK_LIST', getTaskList);
-  yield takeLatest('GET_TARGET_LIST', getTargetList);
+  yield takeLatest('TARGET_POST', postTarget);
+  yield takeLatest('TARGET_PUT', putTarget);
 
 }
 
