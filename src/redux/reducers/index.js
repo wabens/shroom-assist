@@ -3,8 +3,9 @@ import errors from './errorsReducer';
 import loginMode from './loginModeReducer';
 import user from './userReducer';
 import growingRoomData from './growingRoomReducer';
-import incubatorData from './incubatorReducer'
-import taskInfo from './taskInfoReducer'
+import incubatorData from './incubatorReducer';
+import taskInfo from './taskInfoReducer';
+import dataSelected from './dataSelectedReducer'
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   growingRoomData,
   incubatorData,
-  taskInfo // holds task, target and constraint
+  taskInfo, // holds task, target and constraint
+  dataSelected
 });
 
 export default rootReducer;

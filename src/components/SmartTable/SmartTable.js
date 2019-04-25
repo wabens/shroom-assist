@@ -1,33 +1,29 @@
 import React, { Component } from 'react';
 import { MultiGrid, AutoSizer } from 'react-virtualized';
+import { connect } from 'react-redux';
+
 import './SmartTable.css'
 import 'react-virtualized/styles.css'; // only needs to be imported once
 
 
 class SmartTable extends Component {
 
-  state={
-
-    position:{
-      row: null,
-      column: null,
-      selectJSON: null
-    },
-  }
-  
   handleDataClick = (row, column) => {    
     console.log(`position `, row, column);
     console.log(`select row`, this.props.dataSet[row]);
+    console.log(`select column name`, this.props.dataSet[0][column]);
     
     let selectJSON = this.selectJSON(this.props.dataSet[row]);
 
-    this.setState({
-      position:{
-        row,
-        column,
-        selectJSON,
-      }
-    })
+    let info={
+      row,
+      column,
+      columnName: this.props.dataSet[0][column],
+      value: this.props.dataSet[row][column],
+      JSON: selectJSON,
+    }
+
+    this.props.dispatch({type: 'DATA_SELECTED', payload: info})
     
   }
 
@@ -39,9 +35,15 @@ class SmartTable extends Component {
     let cellStyle = 'dataCell';
     // checks position of selected data cell against current rendering cell
     // changes style if selected for highlight effect
-    if(columnIndex===this.state.position.column && rowIndex===this.state.position.row){
-      cellStyle ='selectCell';
+
+    if(rowIndex===this.props.reduxState.dataSelected.dataSelected.row){
+      cellStyle='selectRow';
     }
+
+    if (columnIndex === this.props.reduxState.dataSelected.dataSelected.column){
+      cellStyle='selectColumn'
+    }
+    
 
     if(rowIndex===0){ // if columnHead (row 0), render button
       if(this.props.sort.active===true && this.props.sort.column===columnIndex){
@@ -103,9 +105,9 @@ class SmartTable extends Component {
   render() {
     // console.log(`smartTable props`, this.props.dataSet);
     
-    console.log(`state position `, this.state.position);
+    console.log(`state position `, this.props.reduxState.dataSelected.dataSelected);
     let list = this.props.dataSet;
-    console.log(`selected row`, list[this.state.position.row]);
+    // console.log(`selected row`, list[this.state.position.row]);
     
     if(list&&list[1]){
       return (
@@ -140,4 +142,8 @@ class SmartTable extends Component {
   }   
 }
 
-export default SmartTable;
+const mapReduxStateToProps = reduxState => ({
+  reduxState,
+});
+
+export default connect(mapReduxStateToProps)(SmartTable);

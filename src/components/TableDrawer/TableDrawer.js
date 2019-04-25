@@ -35,13 +35,16 @@ class TableDrawer extends Component {
 
   fetchDataTable = (table) => {
     let data = '';
+    let tableText = '';
     if (table==='incubatorData'){
       data = this.props.reduxState.incubatorData;
       console.log(`fetch data `, data);
+      tableText = 'incubator';
       this.listToIndex(data);
     }
     else if (table==='growingRoomData'){
       data = this.props.reduxState.growingRoomData
+      tableText = 'growing_room';
       this.listToIndex(data);
     };
     this.setState({
@@ -52,6 +55,7 @@ class TableDrawer extends Component {
       },
       table: table
     });
+    this.props.dispatch({type: 'CURRENT_TABLE', payload: tableText});
     
   }
   
