@@ -66,6 +66,8 @@ class TableDrawer extends Component {
   // this new array is set to state and passed to smartTable as props
   listToIndex = (data) => {
     let objectKeys = Object.keys(data[0]);
+    console.log(`column names `, objectKeys);
+    
     let tableData = [];
 
     for (let obj of data) {

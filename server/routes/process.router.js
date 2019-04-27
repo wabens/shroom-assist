@@ -28,24 +28,36 @@ router.get('/incubator', (req, res) => {
         });
 });
 
-router.put('/incubator', (req, res) => {
-    const queryText = `SELECT * FROM "incubator"`;
-    pool.query(queryText)
+router.put('/update', (req, res) => {
+    let value = req.body.modification_value;
+    let table = req.body.target_table;
+    
+    // console.log(`value object put`, column);
+    console.log(`table put `, value);
+    
+    
+
+    // make sure this is actually tageting a column to avoid postman issue
+    let queryText = `UPDATE "incubator" SET ${req.body.target_column[0]} = $1 WHERE "id" = $2;`
+    let queryValues = [value.value, value.id];
+
+
+    pool.query(queryText, queryValues)
         .then((result) => {
-            res.send(result.rows);
-            console.log(`recieved pallets `, result.rows);
+            res.sendStatus(201);
+            console.log(`updated to process table `, queryValues);
 
         })
         .catch((err) => {
-            console.log('Error completing SELECT pallet query', err);
+            console.log('Error completing UPDATE query', err, queryValues);
             res.sendStatus(500);
         });
 });
 
-router.post('/:process', (req, res) => {
+router.post('/insert', (req, res) => {
     let target = req.body.modification_value;
     
-    let table = req.params.process;
+    let table = req.body.target_table;
     
     console.log(`req.body `, target);
     console.log(`req.params`, req.params);
@@ -60,6 +72,16 @@ router.post('/:process', (req, res) => {
                             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
         queryValues = [target.cart_name, target.start_date, target.pallet, target.first_room, target.second_room,
                                 target.second_transfer, target.compost_date, target.notes, target.active];
+    }
+    else if (table === 'incubator') {
+        console.log(`added to incubator `);
+
+        queryText = `INSERT INTO "growing_room" ("cart_name", "start_date", "pallet", "first_room",
+                        "second_room", "second_transfer", "compost_date", "notes", "active")
+                        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
+        queryValues = [target.cart_name, target.start_date, target.pallet, target.first_room, target.second_room,
+            target.second_transfer, target.compost_date, target.notes, target.active
+        ];
     }
 
     pool.query(queryText, queryValues)

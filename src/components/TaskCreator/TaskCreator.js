@@ -32,21 +32,24 @@ class TaskCreator extends Component {
         let modificationEl=null;
         let updateForm=
             <>
-                <TextField
+                {/* <TextField
                     className={"formField"}
                     label="Target Table"
                     value={this.state.target_table}
                     onChange={this.handleChange('target_table')}
                     margin="normal"
                     variant="outlined" 
-                />
-                <label>{this.props.reduxState.dataSelected.dataSelected.columnName}:</label>
+                /> */}
+                <p>Modify: {this.props.reduxState.dataSelected.currentTable}</p>
+                <p>Column: {this.props.reduxState.dataSelected.dataSelected.columnName}</p>
+                <p>From: {String(this.props.reduxState.dataSelected.dataSelected.value)}</p>
+                <label>To:</label>
                 <TextField
                     className={"formField"}
                     label="Value"
                     value={this.state.modification_value}
                     onChange={this.handleChange('modification_value')}
-                    margin="normal"
+                    margin="dense"
                     variant="outlined" 
                 />
             </>;
@@ -66,7 +69,7 @@ class TaskCreator extends Component {
                     label="Name"
                     value={this.state.name}
                     onChange={this.handleChange('name')}
-                    margin="normal"
+                    margin="dense"
                     variant="outlined"
                 />
                 <TextField
@@ -74,7 +77,7 @@ class TaskCreator extends Component {
                     label="Description"
                     value={this.state.description}
                     onChange={this.handleChange('description')}
-                    margin="normal"
+                    margin="dense"
                     variant="outlined"
                 />
                 <div>
@@ -86,7 +89,7 @@ class TaskCreator extends Component {
                         label="Type"
                         value={this.state.modification}
                         onChange={this.handleChange('modification')}
-                        margin="normal"
+                        margin="dense"
                         variant="outlined"
                     >
                         <option value={'POST'}>Insert</option>

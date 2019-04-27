@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './TaskView.css';
+import TargetForm from './TargetForm'
 
 
 
@@ -28,10 +29,10 @@ class TaskItem extends Component {
             if (target.modification==='POST'){
                 this.props.dispatch({type: 'TARGET_POST', payload: target})
             }
-            // else if (target.modification==='PUT'){
-            //     this.props.dispatch({type: 'TARGET_PUT', payload: target})
+            else if (target.modification==='PUT'){
+                this.props.dispatch({type: 'TARGET_PUT', payload: target})
 
-            // }
+            }
         }
     }
 
@@ -43,7 +44,8 @@ class TaskItem extends Component {
                 <p>{this.props.task.task_name}</p>
                 <p>{this.props.task.description}</p>
                 {taskTargets.map( target => 
-                <p>{target.target_table}, {target.modification}</p>)}
+                    <TargetForm target = {target}/>
+                )}
                 <button onClick={()=>this.handleComplete(taskTargets)}>Complete</button>
             </div>
         )

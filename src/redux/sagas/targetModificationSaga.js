@@ -9,7 +9,7 @@ import axios from 'axios';
 function* postTarget(action) {
   try { 
     console.log(`post table mod`, action.payload);
-    yield axios.post('api/process/growing_room', action.payload);
+    yield axios.post('api/process/insert', action.payload);
     
   } catch (error) {
       console.log('Error posting target modification', error);
@@ -20,7 +20,7 @@ function* postTarget(action) {
 function* putTarget(action) {
     try { 
         console.log(`put table mod`, action.payload);
-        yield axios.put('api/process/growing_room', action.payload);
+        yield axios.put('api/process/update', action.payload);
     
     } catch (error) {
       console.log('Error PUT target modification', error);
