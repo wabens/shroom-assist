@@ -6,7 +6,7 @@ import getGrowingRoomSaga from './getGrowingRoomSaga';
 import getIncubatorSaga from './getIncubatorSaga';
 import taskInfoSaga from './taskInfoSaga';
 import targetModificationSaga from './targetModificationSaga';
-
+import updateTargetValue from './targetFormSaga';
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
 // This is imported in index.js as rootSaga
@@ -22,6 +22,7 @@ export default function* rootSaga() {
     getGrowingRoomSaga(),
     getIncubatorSaga(),
     taskInfoSaga(),
-    targetModificationSaga()
+    targetModificationSaga(),
+    updateTargetValue()
   ]);
 }

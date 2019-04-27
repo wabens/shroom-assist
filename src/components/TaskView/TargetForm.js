@@ -18,26 +18,36 @@ class TargetForm extends Component {
         });
     }
 
+    handleSave = () =>{
+        let target = this.props.target;
+        target.modification_value = this.state;
+        console.log(`handSave target `, target);
+        
+        this.props.dispatch({ type: 'UPDATE_TARGET_VALUE', payload: target})
+    }
+
     render(){
+
 
         console.log(`props targetForm`, this.props);
         
         console.log(`state targetForm `, this.state);
         
-        let renderEl = null;
-        
-            renderEl = 
+
+
+            let renderEl = 
                 <form className={"target-form"}>
                     {this.props && this.props.target.target_column.map(column =>
                     <TextField
                     className={"form-field"}
                     label={column}
-                    // value={this.state.modification}
+                    value={this.state[column]}
                     onChange={this.handleChange(column)}
                     margin="dense"
                     variant="outlined"
                     />)
                     }
+                    <button onClick={this.handleSave}>Save</button>
                 </form>
 
         return(

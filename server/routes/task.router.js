@@ -33,6 +33,26 @@ router.get('/target', (req, res) => {
         });
 });
 
+// update target modificaiton_value
+router.put('/target/value', (req, res) => {
+    const target = req.body;
+    console.log(`target`, target);
+    
+    const queryText = `UPDATE "target" SET "modification_value" = $1 WHERE "target_id"=$2`;
+    const queryValue = [target.modification_value, target.target_id];
+
+    pool.query(queryText, queryValue)
+        .then((result) => {
+            res.sendStatus(200);
+            console.log(`updated target modificaiton_value `, queryValue);
+
+        })
+        .catch((err) => {
+            console.log('Error completing UPDATE target query', err);
+            res.sendStatus(500);
+        });
+});
+
 // get all constraints
 router.get('/constraint', (req, res) => {
     const queryText = `SELECT * FROM "constraint"`;

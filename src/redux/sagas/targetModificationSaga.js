@@ -3,9 +3,8 @@ import axios from 'axios';
 
 
 
-// Splits put from post in both cases the action.payload contains a target
-// the .target_table will be sent as a param to determine which table is modified
-// the .modification_value contains a stringified object with the values
+// payload for POST and PUT contains whole target object
+// on server modification values and target row if PUT are pulled from target object
 function* postTarget(action) {
   try { 
     console.log(`post table mod`, action.payload);
