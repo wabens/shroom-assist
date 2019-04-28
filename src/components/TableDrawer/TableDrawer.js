@@ -81,10 +81,11 @@ class TableDrawer extends Component {
     // console.log(`columnNames...`, objectKeys);
     if (this.props.taskConstraints.length) {
       // console.log(`listToIndex...`, currentTable, this.props.taskConstraints[0].constraint_table);
-
-      if (currentTable === this.props.taskConstraints[0].constraint_table) {
-        tableData = this.constraintFilter(tableData, objectKeys, this.props.taskConstraints[0]);
-        console.log(`linkToIndex after constraintFilter `, tableData);
+      for(let constraint of this.props.taskConstraints){
+        if (currentTable === constraint.constraint_table) {
+          tableData = this.constraintFilter(tableData, objectKeys, constraint);
+          console.log(`linkToIndex after constraintFilter `, tableData);
+        }
       }
     }
     tableData.unshift(objectKeys);
