@@ -44,12 +44,12 @@ class TableDrawer extends Component {
       data = this.props.reduxState.incubatorData;
       console.log(`fetch data `, data);
       tableText = 'incubator';
-      this.listToIndex(data);
+      this.listToIndex(data, tableText);
     }
     else if (table==='growingRoomData'){
       data = this.props.reduxState.growingRoomData
       tableText = 'growing_room';
-      this.listToIndex(data);
+      this.listToIndex(data, tableText);
     };
     this.setState({
       sort:{
@@ -68,7 +68,7 @@ class TableDrawer extends Component {
   // listToIndex pulls the keys off of the first object in the given data set and sets it to state
   // it flattens the objects into arrays and puts an array of keys at the beginning of the new array
   // this new array is set to state and passed to smartTable as props
-  listToIndex = (data) => {
+  listToIndex = (data, currentTable) => {
     let objectKeys = Object.keys(data[0]);
     // console.log(`column names `, objectKeys);
     
@@ -78,10 +78,15 @@ class TableDrawer extends Component {
       let newArray = Object.values(obj);
       tableData.push(newArray);
     }
-    // console.log(`listToIndex...`, tableData);
     // console.log(`columnNames...`, objectKeys);
+    if (this.props.taskConstraints.length) {
+      // console.log(`listToIndex...`, currentTable, this.props.taskConstraints[0].constraint_table);
 
-    tableData = this.constraintFilter(tableData, objectKeys);
+      if (currentTable === this.props.taskConstraints[0].constraint_table) {
+        tableData = this.constraintFilter(tableData, objectKeys, this.props.taskConstraints[0]);
+        console.log(`linkToIndex after constraintFilter `, tableData);
+      }
+    }
     tableData.unshift(objectKeys);
     
     this.setState({
@@ -137,37 +142,36 @@ class TableDrawer extends Component {
 
   // applies filter to each row in data set and constrains data set
   // called in listToIndex 
-  constraintFilter = (dataSet, columnNames) => {
-    console.log(`in constraintFilter`, this.props.taskConstraints, dataSet);
-    let columnIndex = columnNames.indexOf('active');
-    console.log(`constraintFilter index`, columnIndex);
-    
-    if(this.props.taskConstraints){
+  constraintFilter = (dataSet, columnNames, constraint) => {
+    //console.log(`in constraintFilter`, this.props.taskConstraints, dataSet);
+    let columnIndex = columnNames.indexOf(constraint.constraint_column);
+    //console.log(`constraintFilter index`, columnIndex);
+          console.log(`constraint on dataSet present...`);
       let filterSet = [];
       for (let row of dataSet){        
-        if(this.compareIt(row[columnIndex])==true){
+        if(this.compareIt(row[columnIndex], constraint)==true){
           //console.log(`filter satisfied row`, row);
-          
           filterSet.push(row);
         }
+      //console.log(`filterSet in constraint `, filterSet);
       }
-      //this.setState({ dataSet: filterSet})
-      console.log(`filterSet in constraint `, filterSet);
-      return filterSet
-    }else{
-      return dataSet
-    }
-  }
-
+    return filterSet
+  } 
+ 
   // parses string statement and evalutes expression
-  compareIt = (data) => {
-    //console.log(`in compareIt`, data);
-    let operator = '=';
-    let value = true;
-    if (operator==='=' && value===data){
-      console.log(`compareIt =`);
+  compareIt = (data, constraint) => {
+    let operator = constraint.constraint_comparison.comparison;
+    let value = constraint.constraint_comparison.value;
+    //console.log(`in compareIt data, value`, data, value);
+
+    if (operator==='=' && value==data){
+      console.log(`compareIt`, operator);
+      return true
+    }else if (operator==='<='&& value<=data){
+      console.log(`compareIt`, operator);
       return true
     }else if (operator==='>'&& value>data){
+      console.log(`compareIt`, operator);
       return true
     }else{
       return false

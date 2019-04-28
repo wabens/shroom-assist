@@ -14,7 +14,7 @@ class TaskItem extends Component {
         let constraintList = this.props.taskInfo.constraintList;
         for (let constraint of constraintList){
             if (constraint.task_id === this.props.task.task_id){
-                taskConstraints.push(constraint)
+                taskConstraints.push(constraint);
             }
         }
         return taskConstraints
