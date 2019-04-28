@@ -6,9 +6,12 @@ function* getIncubator(action) {
     // get growing room data
     let response = yield axios.get('api/process/incubator');
     console.log(`incubator `, response);
-    
     // set table to redux state
     yield put({ type: 'SET_INCUBATOR', payload: response.data });
+    
+    //get growing room data types
+    let types = yield axios.get('api/process/incubator/types')
+    yield put({type: 'SET_INCUBATOR_TYPES', payload: types.data})
     
   } catch (error) {
       console.log('Error getting data', error);

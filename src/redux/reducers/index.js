@@ -5,7 +5,8 @@ import user from './userReducer';
 import growingRoomData from './growingRoomReducer';
 import incubatorData from './incubatorReducer';
 import taskInfo from './taskInfoReducer';
-import dataSelected from './dataSelectedReducer'
+import dataSelected from './dataSelectedReducer';
+import processDataTypes from './processDataTypes';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   growingRoomData,
   incubatorData,
   taskInfo, // holds task, target and constraint
-  dataSelected
+  dataSelected,
+  processDataTypes
 });
 
 export default rootReducer;

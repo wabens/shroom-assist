@@ -9,7 +9,21 @@ router.get('/growing_room', (req, res) => {
             res.send(result.rows);
         })
         .catch((err) => {
-            console.log('Error completing SELECT carts-pallet query', err);
+            console.log('Error completing SELECT growing_room query', err);
+            res.sendStatus(500);
+        });
+});
+
+router.get('/growing_room/types', (req, res) => {
+    const queryText = `select column_name,data_type from information_schema.columns where table_name = 'growing_room';`;
+    pool.query(queryText)
+        .then((result) => {
+            res.send(result.rows);
+            console.log(`recieved growing_room data types `, result.rows);
+
+        })
+        .catch((err) => {
+            console.log('Error completing SELECT for growing_room data types', err);
             res.sendStatus(500);
         });
 });
@@ -23,7 +37,21 @@ router.get('/incubator', (req, res) => {
 
         })
         .catch((err) => {
-            console.log('Error completing SELECT pallet query', err);
+            console.log('Error completing SELECT incubator query', err);
+            res.sendStatus(500);
+        });
+});
+
+router.get('/incubator/types', (req, res) => {
+    const queryText = `select column_name,data_type from information_schema.columns where table_name = 'incubator';`;
+    pool.query(queryText)
+        .then((result) => {
+            res.send(result.rows);
+            console.log(`recieved incubator data types `, result.rows);
+
+        })
+        .catch((err) => {
+            console.log('Error completing SELECT for incubator data types', err);
             res.sendStatus(500);
         });
 });

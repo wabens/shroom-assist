@@ -6,9 +6,11 @@ function* getGrowingRoom(action) {
     // get growing room data
     let response = yield axios.get('api/process/growing_room');
     console.log(`growing room `, response);
-    
     // set table to redux state
     yield put({ type: 'SET_GROWING_ROOM', payload: response.data });
+
+    let types = yield axios.get('api/process/growing_room/types')
+    yield put({type: 'SET_GROWING_ROOM_TYPES', payload: types.data})
     
   } catch (error) {
       console.log('Error getting growing room data', error);
