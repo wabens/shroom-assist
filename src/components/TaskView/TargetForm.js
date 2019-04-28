@@ -21,9 +21,12 @@ class TargetForm extends Component {
     handleSave = () =>{
         let target = this.props.target;
         target.modification_value = this.state;
-        console.log(`handSave target `, target);
+        console.log(`handleSave target `, target);
         
         this.props.dispatch({ type: 'UPDATE_TARGET_VALUE', payload: target})
+    }
+
+    checkType = (column) => {
     }
 
     render(){
@@ -38,7 +41,9 @@ class TargetForm extends Component {
             let renderEl = 
                 <form className={"target-form"}>
                     {this.props && this.props.target.target_column.map(column =>
+
                     <TextField
+                    type={this.checkType(column)}
                     className={"form-field"}
                     label={column}
                     value={this.state[column]}

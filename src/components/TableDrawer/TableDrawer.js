@@ -12,8 +12,8 @@ import sort from 'fast-sort'; // to sort columns
 
 // holds the data table
 // tab selection pulls raw data from reducer
-// raw data is converted to 2d array and 
-// object keys are preserved for column headers
+// raw data is converted to 2d array and object keys are preserved for column headers
+// filters and sorts data 
 class TableDrawer extends Component {
   state= {
     open: false,
@@ -33,6 +33,10 @@ class TableDrawer extends Component {
     })
   }
 
+// Called when the drawer is opened and table is selected
+// Calls table based on button click, and sends to listToIndex
+// Sets to neutral sort direction and sets table state
+// Also sets global redux state for table
   fetchDataTable = (table) => {
     let data = '';
     let tableText = '';
@@ -59,14 +63,14 @@ class TableDrawer extends Component {
     
   }
   
-  // Called when the drawer is opened and table is selected
+  // Called in fetchDataTable
   // Grid component within smartTable requires a 2d array as opposed to an array of objects
-  // listToIndex pulls the keys off of the first object in the given data set
+  // listToIndex pulls the keys off of the first object in the given data set and sets it to state
   // it flattens the objects into arrays and puts an array of keys at the beginning of the new array
   // this new array is set to state and passed to smartTable as props
   listToIndex = (data) => {
     let objectKeys = Object.keys(data[0]);
-    console.log(`column names `, objectKeys);
+    // console.log(`column names `, objectKeys);
     
     let tableData = [];
 
@@ -74,10 +78,11 @@ class TableDrawer extends Component {
       let newArray = Object.values(obj);
       tableData.push(newArray);
     }
+    // console.log(`listToIndex...`, tableData);
+    // console.log(`columnNames...`, objectKeys);
 
-    console.log(`listToIndex...`, tableData);
-    console.log(`columnNames...`, objectKeys);
-    tableData.unshift(objectKeys)
+    tableData = this.constraintFilter(true, tableData, objectKeys);
+    tableData.unshift(objectKeys);
     
     this.setState({
         dataSet: tableData,
@@ -85,53 +90,88 @@ class TableDrawer extends Component {
     })
   };
 
-    handleSort = (column) =>{
-        let list = this.state.dataSet;
-        list.shift();
-        let columnNames=this.state.columnNames
-        if(this.state.sort.direction===''){
-            console.log(`pre sorted data `, list);
-            console.log(`column names `, this.state.columnNames);
-            
-            sort(list).asc(l=>l[column]);
-            list.unshift(this.state.columnNames);
-            console.log(`sorted `, list);
-            this.setState({
-                sort: {
-                    direction: 'ASC',
-                    column,
-                    active: true,
-                },
-                dataSet: list
-             })
-        }
-        else if(this.state.sort.direction==='ASC'){
-            sort(list).desc(l=>l[column]);
-            list.unshift(this.state.columnNames)
-            console.log(`sorted `, list);
-            this.setState({
-                sort: {
-                    direction: 'DESC',
-                    column,
-                    active: true
-                },
-                dataSet: list
+// sorts the data set to state by fetch data table
+  handleSort = (column) =>{
+      let list = this.state.dataSet;
+      list.shift(); // pulls column names array off data set
+      if(this.state.sort.direction===''){
+          // console.log(`pre sorted data `, list);
+          // console.log(`column names `, this.state.columnNames);
+          sort(list).asc(l=>l[column]);
+          list.unshift(this.state.columnNames);
+          // console.log(`sorted `, list);
+          this.setState({
+              sort: {
+                  direction: 'ASC',
+                  column,
+                  active: true,
+              },
+              dataSet: list
             })
-        }
-        else if(this.state.sort.direction==='DESC'){
-            this.fetchDataTable(this.state.table)
-            this.setState({
-                sort: {
-                direction: '',
-                column: 0,
-                active: false,
-            }
-        })
-        }
+      }
+      else if(this.state.sort.direction==='ASC'){
+          sort(list).desc(l=>l[column]);
+          list.unshift(this.state.columnNames)
+          // console.log(`sorted `, list);
+          this.setState({
+              sort: {
+                  direction: 'DESC',
+                  column,
+                  active: true
+              },
+              dataSet: list
+          })
+      }
+      else if(this.state.sort.direction==='DESC'){
+          this.fetchDataTable(this.state.table)
+          this.setState({
+              sort: {
+              direction: '',
+              column: 0,
+              active: false,
+          }
+      })
+      }
+}
 
+  // applies filter to constrains data set
+  constraintFilter = (toFilter, dataSet, columnNames) => {
+    console.log(`in constraintFilter`, columnNames, dataSet);
+    let columnIndex = columnNames.indexOf('active');
+    console.log(`constraintFilter index`, columnIndex);
+    
+    if(toFilter){
+      let filterSet = [];
+      for (let row of dataSet){        
+        if(this.compareIt(row[columnIndex])==true){
+          console.log(`filter satisfied row`, row);
+          
+          filterSet.push(row);
+        }
+      }
+      //this.setState({ dataSet: filterSet})
+      console.log(`filterSet in constraint `, filterSet);
+      return filterSet
+    }else{
+      return dataSet
+    }
   }
 
-
+  // filter callback that parses string statement from props
+  compareIt = (data) => {
+    //console.log(`in compareIt`, data);
+    let operator = '=';
+    let value = true;
+    if (operator==='=' && value===data){
+      console.log(`compareIt satisfied`);
+      
+      return true
+    }else if (operator==='>'&& value>data){
+      return true
+    }else{
+      return false
+    }
+  }
 
   render() {
     console.log(`dataset in tableDrawer `, this.state.dataSet);

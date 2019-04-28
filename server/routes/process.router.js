@@ -29,17 +29,13 @@ router.get('/incubator', (req, res) => {
 });
 
 router.put('/update', (req, res) => {
-    let value = req.body.modification_value;
+    let value = Object.values(req.body.modification_value);
     let table = req.body.target_table;
+    //  console.log(`table put `, value);
     
-    // console.log(`value object put`, column);
-    console.log(`table put `, value);
-    
-    
-
     // make sure this is actually tageting a column to avoid postman issue
     let queryText = `UPDATE "incubator" SET ${req.body.target_column[0]} = $1 WHERE "id" = $2;`
-    let queryValues = [value.value, value.id];
+    let queryValues = [value[0], value.id];
 
 
     pool.query(queryText, queryValues)

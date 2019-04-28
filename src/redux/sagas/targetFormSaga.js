@@ -6,7 +6,7 @@ function* updateTargetValue(action) {
 
     yield axios.put('api/task/target/value', action.payload);
     
-    //yield put({ type: '', payload: response.data });
+    //yield put({ type: 'GET_TARGET_LIST'});
     
   } catch (error) {
       console.log('Error updating target data', error);
