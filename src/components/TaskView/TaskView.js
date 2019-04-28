@@ -18,8 +18,9 @@ class TaskView extends Component {
     componentDidMount(){
         this.getTaskInfo()
     }
+
     render(){
-        console.log(`reduxstate`, this.props.reduxState);
+        console.log(`reduxstate taskView`, this.props.reduxState);
         let taskInfo = this.props.reduxState.taskInfo
         
         
@@ -28,7 +29,7 @@ class TaskView extends Component {
                 <h1>Tasks</h1>
                 <div className={'task-list'}>
                     {taskInfo.taskList.map( task => 
-                            <TaskItem task={task} taskInfo={taskInfo}/>
+                            <TaskItem key={task.task_id} task={task} taskInfo={taskInfo}/>
                     )}
                 </div>
             </section>

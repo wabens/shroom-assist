@@ -15,7 +15,12 @@ class TaskCreator extends Component {
         modification: '',
     }
 
-
+    componentDidMount(){
+        this.props.dispatch({type: 'FETCH_USER'})
+        this.props.dispatch({type: 'GET_GROWING_ROOM'})
+        this.props.dispatch({type: 'GET_INCUBATOR'})
+    }
+    
     handleChange= field=>event=>{
         this.setState({
             ...this.state,

@@ -81,7 +81,7 @@ class TableDrawer extends Component {
     // console.log(`listToIndex...`, tableData);
     // console.log(`columnNames...`, objectKeys);
 
-    tableData = this.constraintFilter(true, tableData, objectKeys);
+    tableData = this.constraintFilter(tableData, objectKeys);
     tableData.unshift(objectKeys);
     
     this.setState({
@@ -91,6 +91,7 @@ class TableDrawer extends Component {
   };
 
 // sorts the data set to state by fetch data table
+// passed through props and called in SmartTable
   handleSort = (column) =>{
       let list = this.state.dataSet;
       list.shift(); // pulls column names array off data set
@@ -134,17 +135,18 @@ class TableDrawer extends Component {
       }
 }
 
-  // applies filter to constrains data set
-  constraintFilter = (toFilter, dataSet, columnNames) => {
-    console.log(`in constraintFilter`, columnNames, dataSet);
+  // applies filter to each row in data set and constrains data set
+  // called in listToIndex 
+  constraintFilter = (dataSet, columnNames) => {
+    console.log(`in constraintFilter`, this.props.taskConstraints, dataSet);
     let columnIndex = columnNames.indexOf('active');
     console.log(`constraintFilter index`, columnIndex);
     
-    if(toFilter){
+    if(this.props.taskConstraints){
       let filterSet = [];
       for (let row of dataSet){        
         if(this.compareIt(row[columnIndex])==true){
-          console.log(`filter satisfied row`, row);
+          //console.log(`filter satisfied row`, row);
           
           filterSet.push(row);
         }
@@ -157,14 +159,13 @@ class TableDrawer extends Component {
     }
   }
 
-  // filter callback that parses string statement from props
+  // parses string statement and evalutes expression
   compareIt = (data) => {
     //console.log(`in compareIt`, data);
     let operator = '=';
     let value = true;
     if (operator==='=' && value===data){
-      console.log(`compareIt satisfied`);
-      
+      console.log(`compareIt =`);
       return true
     }else if (operator==='>'&& value>data){
       return true

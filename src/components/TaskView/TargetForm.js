@@ -11,7 +11,7 @@ class TargetForm extends Component {
     }
 
     handleChange = column => event=>{
-        console.log(`handlechange target `, event, column);
+        // console.log(`handlechange target `, event, column);
         
         this.setState({
             [column]: event.target.value
@@ -21,7 +21,7 @@ class TargetForm extends Component {
     handleSave = () =>{
         let target = this.props.target;
         target.modification_value = this.state;
-        console.log(`handleSave target `, target);
+        // console.log(`handleSave target `, target);
         
         this.props.dispatch({ type: 'UPDATE_TARGET_VALUE', payload: target})
     }
@@ -32,16 +32,15 @@ class TargetForm extends Component {
     render(){
 
 
-        console.log(`props targetForm`, this.props);
+        // console.log(`props targetForm`, this.props);
         
-        console.log(`state targetForm `, this.state);
+        // console.log(`state targetForm `, this.state);
         
 
 
             let renderEl = 
                 <form className={"target-form"}>
                     {this.props && this.props.target.target_column.map(column =>
-
                     <TextField
                     type={this.checkType(column)}
                     className={"form-field"}
