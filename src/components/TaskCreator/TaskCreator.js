@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import './TaskCreator.css'
 import { connect } from 'react-redux';
+import AddTarget from './AddTarget';
+const moment = require('moment');
+
 
 
 
@@ -10,9 +13,7 @@ class TaskCreator extends Component {
     state={
         name: '',
         description: '',
-        target_table: '',
-        modification_value: '',
-        modification: '',
+
     }
 
     componentDidMount(){
@@ -22,9 +23,13 @@ class TaskCreator extends Component {
     }
     
     handleChange= field=>event=>{
+        console.log(`handleChange `, field, event.target.value);
+        
         this.setState({
-            ...this.state,
-            [field]: event.target.value
+            target:{
+                ...this.state.target,
+                [field]: event.target.value
+            }
         })
     }
 
@@ -32,6 +37,24 @@ class TaskCreator extends Component {
         event.preventDefault();
 
     }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        let create_date = moment()
+        console.log(`momment `, create_date);
+        
+        let task = {
+            task_name: this.state.name,
+            description: this.state.description,
+            create_date: create_date,
+            active: true,
+            creator: 1
+
+        }
+        this.props.dispatch({type: 'ADD_TASK', payload: task})
+
+    }
+
     render() {
         console.log(`state `, this.state);
         let modificationEl=null;
@@ -85,24 +108,8 @@ class TaskCreator extends Component {
                     margin="dense"
                     variant="outlined"
                 />
-                <div>
- 
-
-                    <TextField
-                        className={"formField"}
-                        select
-                        label="Type"
-                        value={this.state.modification}
-                        onChange={this.handleChange('modification')}
-                        margin="dense"
-                        variant="outlined"
-                    >
-                        <option value={'POST'}>Insert</option>
-                        <option value={'PUT'}>Update</option>
-                    </TextField>
-                    {modificationEl}
-                    <button onClick={this.handleFill}>add selected data</button>
-                </div>
+                <AddTarget/>
+                <button onClick={this.handleSubmit}>Add task</button>
             </form>
         </section>
         )

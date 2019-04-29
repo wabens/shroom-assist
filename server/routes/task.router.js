@@ -18,6 +18,27 @@ router.get('/', (req, res) => {
         });
 });
 
+// insert a new task
+router.post('/', (req, res) => {
+    let newTask = req.body;
+    console.log(`newTask `, newTask);
+    
+    const queryText = `INSERT INTO "task" ("task_name", "description", "create_date", "active", "creator")
+                        VALUES ($1, $2, $3, $4, $5);`;
+    const queryValues = [newTask.task_name, newTask.description, newTask.create_date, newTask.active, newTask.creator];
+    pool.query(queryText, queryValues)
+        .then((result) => {
+            res.sendStatus(201);
+            console.log(`added new task `, newTask);
+
+        })
+        .catch((err) => {
+            console.log('Error completing INSERT task query', err);
+            res.sendStatus(500);
+        });
+});
+
+
 // get all targets
 router.get('/target', (req, res) => {
     const queryText = `SELECT * FROM "target"`;
@@ -32,6 +53,8 @@ router.get('/target', (req, res) => {
             res.sendStatus(500);
         });
 });
+
+
 
 // update target modificaiton_value
 router.put('/target/value', (req, res) => {
