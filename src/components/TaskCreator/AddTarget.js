@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import Input from '@material-ui/core/Input';
 
 
 
@@ -9,7 +12,7 @@ class AddTarget extends Component {
     state= {
         target:{
             target_table: '',
-            modification_value: {},
+            modification_value:{},
             modification: '',
             target_column:[],
         },
@@ -20,37 +23,56 @@ class AddTarget extends Component {
     
    handleChange = field => event => {
        console.log(`handleChange `, field, event.target.value);
+       let column = null;
        let currentTable = this.state.currentTable;
        if (field === 'target_table' && event.target.value==='incubator'){
             currentTable = this.props.reduxState.processDataTypes.incubatorTypes
        }else if (field === 'target_table' && event.target.value==='growing_room'){
             currentTable = this.props.reduxState.processDataTypes.growingRoomTypes
        }
+       else if (field === 'target_column'){
+            for(let x of event.target.value){
+                column = {...column, [x]: ''};
+            }
+           console.log(`setting modification_value`, column, event.target.value);
+
+        //    this.setState({
+        //        target:{
+        //         }
+        //     })
+       }
        this.setState({
            target:{
-               ...this.state.target,
-               [field]: event.target.value,
+                    ...this.state.target,
+                    [field]: event.target.value,
+                    modification_value:{...column}
+
                },
                currentTable
        })
     };
 
-    handleColumnSelect = event => {
-        let column = event.target.value;
-        let targets = this.state.target.target_column;
-        targets.push(column.column_name)
-        console.log(`handleColumnSElect`, column, this.state.target);
+    valueForm = () => {
+        console.log(`in value form`);
         
-        this.setState({
-            target:{
-                ...this.state.target,
-                target_column: targets
-            }
-        })
-    };
+        let resultEl = [];
+        for(let column of this.state.target.target_column){
+
+            resultEl.push(<TextField
+                className={"formField"}    
+                label={column}
+                value={this.state.target.modification_value}
+                onChange={this.handleChange(column)}
+                margin="dense"
+                variant="outlined"
+            >
+            </TextField>);
+        }
+        return resultEl
+    }
+
 
     render(){
-        console.log(`in render `, this.state);
         let columnSelectEl=null;
         let tableEl = null;
         let valueEl = null;
@@ -86,27 +108,28 @@ class AddTarget extends Component {
                 </TextField>;
             if(this.state.target.target_table.length && this.state.target.modification === 'PUT'){
                 columnSelectEl = 
-                    <TextField
-                        className={"formField"}
-                        select
-                        label="Column"
-                        value={this.state.target.target_column[this.state.targetColumnCount]||''}
-                        onChange={this.handleColumnSelect}
-                        margin="dense"
-                        variant="outlined"
+                    <Select
+                        multiple
+                        value={this.state.target.target_column}
+                        onChange={this.handleChange('target_column')}
                     >
-                    {this.state.currentTable.map((column,i) => 
-                        <option value={column} key={i}>{column.column_name}</option>    
-                    )}
-                    </TextField>;
-                // if(this.state..length){
+                        {this.state.currentTable.map((column,i) => (
+                            <MenuItem key={i} value={column.column_name}>
+                                {column.column_name}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                if(this.state.target.target_column && this.state.target.target_column[0]){
+                    valueEl = this.valueForm();
+  
                     
-                // }
+                }
             } else if (this.state.modification === 'POST') {
 
             }
         }
 
+        console.log(`in render `, this.state);
 
         return(
             <div>
