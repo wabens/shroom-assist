@@ -7,7 +7,7 @@ import SmartTable from '../SmartTable/SmartTable';
 import './TableDrawer.css';
 
 import sort from 'fast-sort'; // to sort columns
-
+const moment = require('moment');
 
 
 // holds the data table
@@ -151,7 +151,7 @@ class TableDrawer extends Component {
       let thisType = this.typeIt(constraint)
       let filterSet = [];
       for (let row of dataSet){        
-        if(this.compareIt(row[columnIndex], constraint)==true){
+        if(this.compareIt(row[columnIndex], constraint, thisType)==true){
           //console.log(`filter satisfied row`, row);
           filterSet.push(row);
         }
@@ -161,11 +161,12 @@ class TableDrawer extends Component {
   } 
  
   // parses string statement and evalutes expression for each row[column]
-  compareIt = (data, constraint) => {
+  compareIt = (data, constraint, thisType) => {
     let operator = constraint.constraint_comparison.comparison;
     let value = constraint.constraint_comparison.value;
     //console.log(`in compareIt data, value`, data, value);
-
+    value=this.convertIt(value, thisType);
+    data=this.convertIt(data, thisType);
     if (operator==='=' && value==data){
       //console.log(`compareIt`, operator);
       return true
@@ -180,8 +181,21 @@ class TableDrawer extends Component {
     }
   }
 
+  convertIt = (value, thisType) => {
+    let result = value
+    //console.log(`convertIt`, thisType);
+    
+    if (thisType === "timestamp without time zone"){
+      console.log(`is timestamp`);
+      result = moment(value)
+    }
+    //console.log(`convertIt result `, result, value);
+    
+    return result
+  }
+
   // references information schema for tables to find the data type of the targeted column
-  // called in 
+  // called in constraintFilter and result is passed into compareIt
   typeIt = (constraint) => {
     let allTypes = [];
     let thisType = '';
@@ -196,6 +210,7 @@ class TableDrawer extends Component {
       };
     }
   console.log(`typeIt result `, thisType, constraint);
+    return thisType
   
   }
 
