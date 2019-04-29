@@ -148,6 +148,7 @@ class TableDrawer extends Component {
     let columnIndex = columnNames.indexOf(constraint.constraint_column);
     //console.log(`constraintFilter index`, columnIndex);
           console.log(`constraint on dataSet present...`);
+      let thisType = this.typeIt(constraint)
       let filterSet = [];
       for (let row of dataSet){        
         if(this.compareIt(row[columnIndex], constraint)==true){
@@ -159,24 +160,43 @@ class TableDrawer extends Component {
     return filterSet
   } 
  
-  // parses string statement and evalutes expression
+  // parses string statement and evalutes expression for each row[column]
   compareIt = (data, constraint) => {
     let operator = constraint.constraint_comparison.comparison;
     let value = constraint.constraint_comparison.value;
     //console.log(`in compareIt data, value`, data, value);
 
     if (operator==='=' && value==data){
-      console.log(`compareIt`, operator);
+      //console.log(`compareIt`, operator);
       return true
     }else if (operator==='<='&& value<=data){
-      console.log(`compareIt`, operator);
+      //console.log(`compareIt`, operator);
       return true
     }else if (operator==='>'&& value>data){
-      console.log(`compareIt`, operator);
+      //console.log(`compareIt`, operator);
       return true
     }else{
       return false
     }
+  }
+
+  // references information schema for tables to find the data type of the targeted column
+  // called in 
+  typeIt = (constraint) => {
+    let allTypes = [];
+    let thisType = '';
+    if(constraint.constraint_table === 'incubator'){
+      allTypes = this.props.reduxState.processDataTypes.incubatorTypes;
+    }else if(constraint.constraint_table==='growing_room'){
+      allTypes = this.props.reduxState.processDataTypes.growingRoomTypes;
+    }
+    for(let column of allTypes){
+      if(column.column_name===constraint.constraint_column){
+        thisType = column.data_type;
+      };
+    }
+  console.log(`typeIt result `, thisType, constraint);
+  
   }
 
   render() {
