@@ -168,13 +168,14 @@ class TableDrawer extends Component {
     value=this.convertIt(value, thisType);
     data=this.convertIt(data, thisType);
     if (operator==='=' && value==data){
-      //console.log(`compareIt`, operator);
       return true
-    }else if (operator==='<='&& value<=data){
-      //console.log(`compareIt`, operator);
+    } else if (operator === '<' && value < data) {
       return true
-    }else if (operator==='>'&& value>data){
-      //console.log(`compareIt`, operator);
+    } else if (operator ==='<='&& value <= data){
+      return true
+    } else if (operator === '>'&& value > data){
+      return true
+    } else if (operator === '>=' && value >= data) {
       return true
     }else{
       return false
