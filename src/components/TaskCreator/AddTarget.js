@@ -29,11 +29,11 @@ class AddTarget extends Component {
             currentTable = this.props.reduxState.processDataTypes.incubatorTypes
        }else if (field === 'target_table' && event.target.value==='growing_room'){
             currentTable = this.props.reduxState.processDataTypes.growingRoomTypes
-       }
-       else if (field === 'target_column'){
+       }else if (field === 'target_column'){
             for(let x of event.target.value){
                 column = {...column, [x]: ''};
-            }
+        }
+    
            console.log(`setting modification_value`, column, event.target.value);
 
         //    this.setState({
@@ -61,8 +61,8 @@ class AddTarget extends Component {
             resultEl.push(<TextField
                 className={"formField"}    
                 label={column}
-                value={this.state.target.modification_value}
-                onChange={this.handleChange(column)}
+                value={this.state.target.modification_value[column]}
+                onChange={this.handleChangeModificationValue(column)}
                 margin="dense"
                 variant="outlined"
             >
@@ -71,6 +71,18 @@ class AddTarget extends Component {
         return resultEl
     }
 
+    handleChangeModificationValue = column => event => {
+        this.setState({
+              target: {
+                  ...this.state.target,
+                  modification_value: {
+                      ...this.state.target.modification_value,
+                      [column]: event.target.value
+                  }
+
+              },
+        })
+    }
 
     render(){
         let columnSelectEl=null;
