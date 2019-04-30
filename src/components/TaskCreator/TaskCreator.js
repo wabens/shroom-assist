@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import './TaskCreator.css'
 import { connect } from 'react-redux';
 import AddTarget from './AddTarget';
+import AddConstraint from './AddConstraint';
 const moment = require('moment');
 
 
@@ -13,7 +14,7 @@ class TaskCreator extends Component {
     state={
         name: '',
         description: '',
-
+        targetList: [],
     }
 
     componentDidMount(){
@@ -33,11 +34,6 @@ class TaskCreator extends Component {
         })
     }
 
-    handleFill = (event) =>{
-        event.preventDefault();
-
-    }
-
     handleSubmit = (event) => {
         event.preventDefault();
         let create_date = moment()
@@ -52,41 +48,26 @@ class TaskCreator extends Component {
 
         }
         this.props.dispatch({type: 'ADD_TASK', payload: task})
+    }
 
+    saveTarget = target => {
+        console.log(`in taskcreator saveTarget `, target);
+                
+        this.setState({
+            targetList:[...this.state.targetList, target]
+            
+        })
+    }
+
+    editTarget = listPosition => {
+        let targetList = this.state.targetList;
+        targetList.splice(listPosition,1);
+        console.log(`editTaret `, this.state);
+        
     }
 
     render() {
-        console.log(`state `, this.state);
-        let modificationEl=null;
-        let updateForm=
-            <>
-                {/* <TextField
-                    className={"formField"}
-                    label="Target Table"
-                    value={this.state.target_table}
-                    onChange={this.handleChange('target_table')}
-                    margin="normal"
-                    variant="outlined" 
-                /> */}
-                <p>Modify: {this.props.reduxState.dataSelected.currentTable}</p>
-                <p>Column: {this.props.reduxState.dataSelected.dataSelected.columnName}</p>
-                <p>From: {String(this.props.reduxState.dataSelected.dataSelected.value)}</p>
-                <label>To:</label>
-                <TextField
-                    className={"formField"}
-                    label="Value"
-                    value={this.state.modification_value}
-                    onChange={this.handleChange('modification_value')}
-                    margin="dense"
-                    variant="outlined" 
-                />
-            </>;
-        if(this.state.modification==='PUT'){
-            modificationEl = updateForm
-        }
-        else if( this.state.modification==='POST'){
-            modificationEl=null;
-        }
+        console.log(`taskcreator state `, this.state);
         
         return(
         <section>
@@ -108,7 +89,9 @@ class TaskCreator extends Component {
                     margin="dense"
                     variant="outlined"
                 />
-                <AddTarget/>
+                <AddTarget saveTarget={this.saveTarget} editTarget={this.editTarget} listPosition = {this.state.targetList.length}/>
+                <AddTarget saveTarget={this.saveTarget} editTarget={this.editTarget} listPosition = {this.state.targetList.length}/>
+                <AddConstraint/>
                 <button onClick={this.handleSubmit}>Add task</button>
             </form>
         </section>
