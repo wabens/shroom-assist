@@ -5,7 +5,7 @@ function* createTask(action) {
   try {
 
     let result = yield axios.post('api/task/', action.payload);
-    console.log(`task id `, result.task_id);
+    console.log(`task id `, result.data[0].task_id);
     
     
   } catch (error) {

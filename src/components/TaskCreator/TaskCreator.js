@@ -24,31 +24,19 @@ class TaskCreator extends Component {
         this.props.dispatch({type: 'GET_INCUBATOR'})
     }
     
-    handleChange= field=>event=>{
+    handleChange = field => event =>{
         console.log(`handleChange `, field, event.target.value);
         
         this.setState({
-            target:{
-                ...this.state.target,
+                ...this.state,
                 [field]: event.target.value
-            }
         })
     }
 
     handleSubmit = (event) => {
-        event.preventDefault();
-        let create_date = moment()
-        console.log(`momment `, create_date);
-        
-        let task = {
-            task_name: this.state.name,
-            description: this.state.description,
-            create_date: create_date,
-            active: true,
-            creator: 1
-
-        }
-        this.props.dispatch({type: 'ADD_TASK', payload: task})
+        event.preventDefault();       
+  
+        this.props.dispatch({type: 'ADD_TASK', payload: this.state})
     }
 
     saveTarget = target => {
@@ -108,7 +96,7 @@ class TaskCreator extends Component {
                 />
                 <AddTarget saveTarget={this.saveTarget} editTarget={this.editTarget} listPosition = {this.state.targetList.length}/>
                 <AddTarget saveTarget={this.saveTarget} editTarget={this.editTarget} listPosition = {this.state.targetList.length}/>
-                
+
                 <AddConstraint saveConstraint={this.saveConstraint} editConstraint={this.editConstraint} listPosition = {this.state.constraintList.length}/>
                 <AddConstraint saveConstraint={this.saveConstraint} editConstraint={this.editConstraint} listPosition = {this.state.constraintList.length}/>
 
