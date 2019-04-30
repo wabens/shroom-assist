@@ -34,15 +34,9 @@ class TaskCreator extends Component {
     }
 
     handleSubmit = (event) => {
-        event.preventDefault();
-        let create_date = moment()
-        console.log(`momment `, create_date);
-        
-        let task = {
-            task_name: this.state.name,
-            description: this.state.description,
-        }
-        this.props.dispatch({type: 'ADD_TASK', payload: task})
+        event.preventDefault();       
+  
+        this.props.dispatch({type: 'ADD_TASK', payload: this.state})
     }
 
     saveTarget = target => {

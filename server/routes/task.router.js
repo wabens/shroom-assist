@@ -20,23 +20,57 @@ router.get('/', (req, res) => {
 });
 
 // insert a new task
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
+    const client = await pool.connect()
     let newTask = req.body;
+    let targetList = req.body.targetList;
+    let constraintList = req.body.constraintList;
     console.log(`newTask `, newTask);
-    
-    const queryText = `INSERT INTO "task" ("task_name", "description", "create_date", "active", "creator")
-                        VALUES ($1, $2, $3, $4, $5) RETURNING "task_id";`;
-    const queryValues = [newTask.task_name, newTask.description, moment(), true, 1];
-    pool.query(queryText, queryValues)
-        .then((result) => {
-            res.send(result.rows);
-            console.log(`added new task `, queryValues);
 
-        })
-        .catch((err) => {
-            console.log('Error completing INSERT task query', err);
-            res.sendStatus(500);
-        });
+    let queryText = `INSERT INTO "task" ("task_name", "description", "create_date", "active", "creator")
+                        VALUES ($1, $2, $3, $4, $5) RETURNING "task_id";`;
+    let queryValues = [newTask.name, newTask.description, moment(), true, 1];
+    try {
+        await client.query('BEGIN');
+        let result = await pool.query(queryText, queryValues);
+        let task_id = result.rows[0].task_id;
+        console.log(`returned id `, task_id);
+        res.sendStatus(201);
+        
+        console.log(`targetList`, targetList);
+        console.log(`constraintLIst`, constraintList);
+        
+        queryText = `INSERT INTO "constraint" ("task_id", "constraint_table", "constraint_column", "constraint_comparison")
+                    VALUES ($1, $2, $3, $4);`
+        for(constraint of constraintList){
+            queryValues = [task_id, constraint.constraint_table, constraint.constraint_column, constraint.constraint_comparison];
+            await pool.query(queryText, queryValues)
+        }
+        queryText = `INSERT INTO "target" ("task_id", "target_table", "target_column", "modification_value", "modification")
+                    VALUES ($1, $2, $3, $4, $5);`
+        for(target of targetList){
+            queryValues = [task_id, target.target_table, target.target_column, target.modification_value, target.modification]
+            await pool.query(queryText, queryValues)
+        }
+
+    } catch(error){
+        await client.query('ROLLBACK')
+        throw error
+
+    } finally{
+        client.release()
+        
+    }
+    // pool.query(queryText, queryValues)
+    //     .then((result) => {
+    //         res.send(result.rows);
+    //         console.log(`added new task `, queryValues);
+
+    //     })
+    //     .catch((err) => {
+    //         console.log('Error completing INSERT task query', err);
+    //         res.sendStatus(500);
+    //     });
 });
 
 
