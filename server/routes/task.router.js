@@ -1,6 +1,7 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const moment = require('moment');
 
 
 // get all tasks
@@ -24,12 +25,12 @@ router.post('/', (req, res) => {
     console.log(`newTask `, newTask);
     
     const queryText = `INSERT INTO "task" ("task_name", "description", "create_date", "active", "creator")
-                        VALUES ($1, $2, $3, $4, $5);`;
-    const queryValues = [newTask.task_name, newTask.description, newTask.create_date, newTask.active, newTask.creator];
+                        VALUES ($1, $2, $3, $4, $5) RETURNING "task_id";`;
+    const queryValues = [newTask.task_name, newTask.description, moment(), true, 1];
     pool.query(queryText, queryValues)
         .then((result) => {
-            res.sendStatus(201);
-            console.log(`added new task `, newTask);
+            res.send(result.rows);
+            console.log(`added new task `, queryValues);
 
         })
         .catch((err) => {

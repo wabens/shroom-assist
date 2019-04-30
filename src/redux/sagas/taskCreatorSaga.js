@@ -4,7 +4,8 @@ import axios from 'axios';
 function* createTask(action) {
   try {
 
-    yield axios.post('api/task/', action.payload);
+    let result = yield axios.post('api/task/', action.payload);
+    console.log(`task id `, result.task_id);
     
     
   } catch (error) {

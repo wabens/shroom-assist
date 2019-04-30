@@ -15,6 +15,7 @@ class TaskCreator extends Component {
         name: '',
         description: '',
         targetList: [],
+        constraintList:[]
     }
 
     componentDidMount(){
@@ -59,11 +60,27 @@ class TaskCreator extends Component {
         })
     }
 
+
     editTarget = listPosition => {
         let targetList = this.state.targetList;
         targetList.splice(listPosition,1);
         console.log(`editTaret `, this.state);
         
+    }
+
+    saveConstraint = constraint => {
+        console.log(`in save constraint `, constraint)
+        this.setState({
+            constraintList:[...this.state.constraintList, constraint]
+        });
+    }
+
+    editConstraint = listPosition => {
+        
+        let constraintList = this.state.constraintList;
+        constraintList.splice(listPosition, 1)
+        console.log(`in editConstraint`, this.state.constraintList);
+
     }
 
     render() {
@@ -91,7 +108,10 @@ class TaskCreator extends Component {
                 />
                 <AddTarget saveTarget={this.saveTarget} editTarget={this.editTarget} listPosition = {this.state.targetList.length}/>
                 <AddTarget saveTarget={this.saveTarget} editTarget={this.editTarget} listPosition = {this.state.targetList.length}/>
-                <AddConstraint/>
+                
+                <AddConstraint saveConstraint={this.saveConstraint} editConstraint={this.editConstraint} listPosition = {this.state.constraintList.length}/>
+                <AddConstraint saveConstraint={this.saveConstraint} editConstraint={this.editConstraint} listPosition = {this.state.constraintList.length}/>
+
                 <button onClick={this.handleSubmit}>Add task</button>
             </form>
         </section>
