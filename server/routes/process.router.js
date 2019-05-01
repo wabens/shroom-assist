@@ -62,9 +62,11 @@ router.put('/update', (req, res) => {
     //  console.log(`table put `, value);
     
     // make sure this is actually tageting a column to avoid postman issue
-    let queryText = `UPDATE "incubator" SET ${req.body.target_column[0]} = $1 WHERE "id" = $2;`
-    let queryValues = [value[0], value.id];
-
+    let queryText = `UPDATE "incubator" SET ${req.body.target_column[1]} = $1 WHERE "id" = $2;`
+    let queryValues = [value[0], req.body.target_id];
+    if(table==='growing_room'){
+        queryText = `UPDATE "growing_room" SET ${req.body.target_column[1]} = $1 WHERE "id" = $2;`
+    }
 
     pool.query(queryText, queryValues)
         .then((result) => {

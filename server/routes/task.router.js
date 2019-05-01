@@ -44,15 +44,14 @@ router.post('/', async (req, res) => {
                     VALUES ($1, $2, $3, $4);`
         for(constraint of constraintList){
             queryValues = [task_id, constraint.constraint_table, constraint.constraint_column, constraint.constraint_comparison];
-            await pool.query(queryText, queryValues)
+            await pool.query(queryText, queryValues);
         }
         queryText = `INSERT INTO "target" ("task_id", "target_table", "target_column", "modification_value", "modification")
                     VALUES ($1, $2, $3, $4, $5);`
         for(target of targetList){
-            queryValues = [task_id, target.target_table, target.target_column, target.modification_value, target.modification]
-            await pool.query(queryText, queryValues)
+            queryValues = [task_id, target.target_table, target.target_column, target.modification_value, target.modification];
+            await pool.query(queryText, queryValues);
         }
-
     } catch(error){
         await client.query('ROLLBACK')
         throw error
