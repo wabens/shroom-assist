@@ -10,9 +10,7 @@ class TargetForm extends Component {
         ...this.props.target.modification_value
     }
 
-    handleChange = column => event=>{
-        // console.log(`handlechange target `, event, column);
-        
+    handleChange = column => event=>{        
         this.setState({
             [column]: event.target.value
         });
@@ -20,37 +18,36 @@ class TargetForm extends Component {
 
     handleSave = () =>{
         let target = this.props.target;
-        target.modification_value = this.state;
-        // console.log(`handleSave target `, target);
-        
+        target.modification_value = this.state;        
         this.props.dispatch({ type: 'UPDATE_TARGET_VALUE', payload: target})
     }
 
-    checkType = (column) => {
+    typeCheck = (columnName) => {
+        let tableTypes = this.state.currentTable
+        for (let column of tableTypes) {
+            if (column.column_name === columnName && column.data_type === 'integer') {
+                return 'number'
+            } else if (column.column_name === columnName && column.data_type === 'timestamp without time zone') {
+                return 'date'
+            }
+        }
+        return 'text'
     }
 
     render(){
 
-
-        // console.log(`props targetForm`, this.props);
-        
-        // console.log(`state targetForm `, this.state);
-        
-
-
             let renderEl = 
                 <form className={"target-form"}>
                     {this.props && this.props.target.target_column.map(column =>
-                    <TextField
-                    type={this.checkType(column)}
-                    className={"form-field"}
-                    label={column}
-                    value={this.state[column]}
-                    onChange={this.handleChange(column)}
-                    margin="dense"
-                    variant="outlined"
-                    />)
-                    }
+                        <TextField
+                            type={this.typeCheck(column)}
+                            className={"form-field"}
+                            label={column}
+                            value={this.state[column]}
+                            onChange={this.handleChange(column)}
+                            margin="dense"
+                        />  
+                    )}
                     <button onClick={this.handleSave}>Save</button>
                 </form>
 
