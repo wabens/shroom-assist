@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import './TaskView.css';
 import TargetForm from './TargetForm'
 import TableDrawer from '../TableDrawer/TableDrawer'
-
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
 
@@ -18,7 +21,6 @@ class TaskItem extends Component {
             }
         }
         return taskConstraints
-
     }
 
     findTargets = ()=>{
@@ -53,15 +55,17 @@ class TaskItem extends Component {
         console.log(`in render taskConstraints`, taskConstraints);
         
         return(
-            <div className={'task-item'}>
-                <p>{this.props.task.task_name}</p>
-                <p>{this.props.task.description}</p>
+            <ExpansionPanel>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    <p>{this.props.task.task_name}</p>
+                    <p>{this.props.task.description}</p>
+                </ExpansionPanelSummary>
                 {taskTargets.map( target => 
                     <TargetForm key={target.target_id} target = {target}/>
                 )}
                 <TableDrawer taskConstraints={taskConstraints} />
                 <button onClick={()=>this.handleComplete(taskTargets)}>Complete</button>
-            </div>
+            </ExpansionPanel>
         )
     }
 
