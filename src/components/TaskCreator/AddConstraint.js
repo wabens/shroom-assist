@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import './TaskCreator.css';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
 
 class AddConstraint extends Component {
 
@@ -47,6 +49,7 @@ class AddConstraint extends Component {
             <>
                 <TextField
                     disabled = {this.state.saved}
+                    InputLabelProps={{ shrink: true }}
                     type={dataType}
                     className={"formField"}    
                     label={'Value'}
@@ -55,22 +58,22 @@ class AddConstraint extends Component {
                     margin="dense"
                 >
                 </TextField>
-                <TextField
-                    disabled = {this.state.saved}
-                    className={"formFieldSelect"}
-                    select
-                    label="Comparison"
-                    value={this.state.constraint.constraint_comparison.comparison}
-                    onChange={this.handleChangeComparison('comparison')}
-                    margin="dense"
-                    variant="outlined"
-                >
-                    <option value={'>'}> > </option>
-                    <option value={'>='}>>=</option>
-                    <option value={'<'}>></option>
-                    <option value={'<='}>>=</option>
-                    <option value={'='}>=</option>
-                </TextField>
+                    <TextField
+                        className={"formField"}    
+                        InputLabelProps={{ shrink: true }}
+                        disabled = {this.state.saved} 
+                        label={'Compare'}                   
+                        select
+                        value={this.state.constraint.constraint_comparison.comparison}
+                        onChange={this.handleChangeComparison('comparison')}
+                        margin={'dense'}
+                    >
+                        <MenuItem value={'>'}> > </MenuItem>
+                        <MenuItem value={'>='}>>=</MenuItem>
+                        <MenuItem value={'<'}>></MenuItem>
+                        <MenuItem value={'<='}>>=</MenuItem>
+                        <MenuItem value={'='}>=</MenuItem>
+                    </TextField>
             </>    
         )
     }
@@ -127,34 +130,36 @@ class AddConstraint extends Component {
         let saveEditEl = <button onClick={this.handleSave}>save</button>
 ;
         let tableEl =
-            <TextField
-                className={"formField"}
-                select
-                label="Table"
-                value={this.state.constraint.constraint_table}
-                onChange={this.handleChange('constraint_table')}
-                margin="dense"
-                variant="outlined"
-                disabled={this.state.saved}
-            >
-                <option value={'incubator'}>incubator</option>
-                <option value={'growing_room'}>growing_room</option>
-            </TextField>;
+
+                <TextField
+                    className={"formField"}
+                    select
+                    label="Table"
+                    value={this.state.constraint.constraint_table}
+                    onChange={this.handleChange('constraint_table')}
+                    margin="dense"
+                    disabled={this.state.saved}
+                >
+                    <MenuItem value={'incubator'}>incubator</MenuItem>
+                    <MenuItem value={'growing_room'}>growing_room</MenuItem>
+                </TextField>
         
         if (this.state.constraint.constraint_table){
             columnSelectEl = 
-                <Select
-                    label={'Column'}
-                    disabled = {this.state.saved}
-                    value={this.state.constraint.constraint_column}
-                    onChange={this.handleChange('constraint_column')}
-                >
-                    {this.state.currentTable.map((column,i) => (
-                        <MenuItem key={i} value={column.column_name}>
-                            {column.column_name}
-                        </MenuItem>
-                    ))}
-                </Select>;
+                <FormControl margin={'dense'} >
+                    <InputLabel shrink>Table</InputLabel>
+                    <Select
+                        disabled = {this.state.saved}
+                        value={this.state.constraint.constraint_column}
+                        onChange={this.handleChange('constraint_column')}
+                    >
+                        {this.state.currentTable.map((column,i) => (
+                            <MenuItem key={i} value={column.column_name}>
+                                {column.column_name}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>;
             if(this.state.constraint.constraint_column){
                 comparisonFormEl = this.comparisonForm()
             }

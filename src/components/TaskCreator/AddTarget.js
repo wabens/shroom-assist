@@ -3,6 +3,10 @@ import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+
+
 
 class AddTarget extends Component {
 
@@ -70,7 +74,7 @@ class AddTarget extends Component {
                 onChange={this.handleChangeModificationValue(column)}
                 margin="dense"
                 autoFocus={focus}
-                ref={'focusDate'}
+                InputLabelProps={{ shrink: true }}
             >
             </TextField>);
         }
@@ -141,10 +145,9 @@ class AddTarget extends Component {
                 value={this.state.target.modification}
                 onChange={this.handleChange('modification')}
                 margin="dense"
-                variant="outlined"
             >
-                <option value={'POST'}>Insert</option>
-                <option value={'PUT'}>Update</option>
+                <MenuItem value={'POST'}>Insert</MenuItem>
+                <MenuItem value={'PUT'}>Update</MenuItem>
             </TextField>;
         let saveEdit = <button onClick={this.handleSave}>Save</button>;
 
@@ -162,44 +165,49 @@ class AddTarget extends Component {
                     value={this.state.target.target_table}
                     onChange={this.handleChange('target_table')}
                     margin="dense"
-                    variant="outlined"
                 >
-                    <option value={'incubator'}>incubator</option>
-                    <option value={'growing_room'}>growing_room</option>
+                    <MenuItem key={1} value={'incubator'}>incubator</MenuItem>
+                    <MenuItem key={2} value={'growing_room'}>growing_room</MenuItem>
                 </TextField>;
             if(this.state.target.target_table.length && this.state.target.modification === 'POST'){
                 columnSelectEl = 
-                    <Select
-                        disabled = {this.state.saved}
-                        multiple
-                        value={this.state.target.target_column}
-                        onChange={this.handleChange('target_column')}
-                    >
-                        {this.state.currentTable.map((column,i) => (
-                            <MenuItem key={i} value={column.column_name}>
-                                {column.column_name}
-                            </MenuItem>
-                        ))}
-                    </Select>
+                    <FormControl margin={'dense'}>
+                        <InputLabel shrink>Column</InputLabel>
+                        <Select
+                            
+                            disabled = {this.state.saved}
+                            multiple
+                            value={this.state.target.target_column}
+                            onChange={this.handleChange('target_column')}
+                        >
+                            {this.state.currentTable.map((column,i) => (
+                                <MenuItem key={i} value={column.column_name}>
+                                    {column.column_name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>;
                 if(this.state.target.target_column && this.state.target.target_column[0]){
                     valueEl = this.valueForm(); 
-                    
                 }
             } else if (this.state.target.target_table.length && this.state.target.modification === 'PUT') {
                 console.log(`PUT and target_table present`);
-                
-                columnSelectEl = 
-                    <Select
-                        disabled = {this.state.saved}
-                        value={this.state.target.target_column}
-                        onChange={this.handleChange('target_column')}
-                    >
-                        {this.state.currentTable.map((column,i) => (
-                            <MenuItem key={i} value={column.column_name}>
-                                {column.column_name}
-                            </MenuItem>
-                        ))}
-                    </Select>
+                                columnSelectEl = 
+                    <FormControl margin={'dense'}>
+                        <InputLabel shrink>Column</InputLabel>
+                        <Select
+                            disabled = {this.state.saved}
+                            value={this.state.target.target_column}
+                            onChange={this.handleChange('target_column')}
+                        >
+                            {this.state.currentTable.map((column,i) => (
+                                <MenuItem key={i} value={column.column_name}>
+                                    {column.column_name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>;
+     
                 if(this.state.target.target_column && this.state.target.target_column[0]){
                     valueEl = this.valueForm(); 
                     
