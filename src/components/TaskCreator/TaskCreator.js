@@ -48,7 +48,6 @@ class TaskCreator extends Component {
         })
     }
 
-
     editTarget = listPosition => {
         let targetList = this.state.targetList;
         targetList.splice(listPosition,1);
@@ -87,7 +86,8 @@ class TaskCreator extends Component {
                     variant="outlined"
                 />
                 <TextField
-                    className={"formField"}
+                    className={"taskDescription"}
+                    multiline
                     label="Description"
                     value={this.state.description}
                     onChange={this.handleChange('description')}

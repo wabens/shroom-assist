@@ -53,16 +53,15 @@ class TargetForm extends Component {
                 <form className={"target-form"}>
                     {this.props && this.props.target.target_column.map(column =>
                     <TextField
-                    InputLabelProps={{ shrink: true }}
-                    type={this.checkType(column)}
-                    className={"form-field"}
-                    label={column}
-                    value={this.state[column]}
-                    onChange={this.handleChange(column)}
-                    margin="dense"
+                        InputLabelProps={{ shrink: true }}
+                        type={this.checkType(column)}
+                        className={"form-field"}
+                        label={column}
+                        value={this.state[column]}
+                        onChange={this.handleChange(column)}
+                        margin="dense"
                     />)
                     }
-                    {/* <button onClick={this.handleSave}>Save</button> */}
                 </form>
 
         return(
