@@ -60,7 +60,6 @@ class AddTarget extends Component {
         for(let column of this.state.target.target_column){
             let dataType = this.typeCheck(column);
             let focus = false;
-            let label = column;
             if(dataType==='date'){
                 focus=true
             }
