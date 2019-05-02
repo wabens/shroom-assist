@@ -20,6 +20,8 @@ class SmartTable extends Component {
       column,
       columnName: this.props.dataSet[0][column],
       value: this.props.dataSet[row][column],
+      rowData: this.props.dataSet[row],
+      columnList: this.props.dataSet[0],
       JSON: selectJSON,
     }
 
@@ -103,9 +105,9 @@ class SmartTable extends Component {
 
 
   render() {
-    // console.log(`smartTable props`, this.props.dataSet);
+    console.log(`smartTable props`, this.props);
     
-    console.log(`state position `, this.props.reduxState.dataSelected.dataSelected);
+    // console.log(`state position `, this.props.reduxState.dataSelected.dataSelected);
     let list = this.props.dataSet;
     // console.log(`selected row`, list[this.state.position.row]);
     

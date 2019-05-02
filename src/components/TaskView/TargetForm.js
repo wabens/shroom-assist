@@ -40,26 +40,32 @@ class TargetForm extends Component {
            }
         }
         return 'text'
+    }
 
-
+    handleImport = (field) => {
+        let selected = this.props.reduxState.dataSelected.dataSelected
+        console.log(`import reduxstate `, selected);
+        
     }
 
     render(){
-
             let renderEl = 
                 <form className={"target-form"}>
                     {this.props && this.props.target.target_column.map(column =>
-                    <TextField
-                        InputLabelProps={{ shrink: true }}
-                        type={this.checkType(column)}
-                        className={"form-field"}
-                        label={column}
-                        value={this.state[column]}
-                        onChange={this.handleChange(column)}
-                        margin="dense"
-                    />)
+                    <>
+                        <TextField
+                            InputLabelProps={{ shrink: true }}
+                            type={this.checkType(column)}
+                            className={"form-field"}
+                            label={column}
+                            value={this.state[column]}
+                            onChange={this.handleChange(column)}
+                            margin="dense"
+                        />
+                        {this.props.target.modification==='PUT' && <button onClick = {this.handleImport(column)}>Import selected</button>}
+                    </>
+                    )
                     }
-
                 </form>
 
         return(

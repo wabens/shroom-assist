@@ -48,6 +48,8 @@ class TableDrawer extends Component {
     }
     else if (table==='growingRoomData'){
       data = this.props.reduxState.growingRoomData
+      console.log(`fetch data `, data);
+
       tableText = 'growing_room';
       this.listToIndex(data, tableText);
     };
@@ -78,10 +80,14 @@ class TableDrawer extends Component {
       let newArray = Object.values(obj);
       tableData.push(newArray);
     }
+    console.log(`listToIndex before constraint filter `, this.props.taskConstraints, tableData, currentTable);
+    
     // console.log(`columnNames...`, objectKeys);
     if (this.props.taskConstraints.length) {
       // console.log(`listToIndex...`, currentTable, this.props.taskConstraints[0].constraint_table);
       for(let constraint of this.props.taskConstraints){
+        console.log(`listToIndex before constraint filter `, constraint, tableData, currentTable);
+
         if (currentTable === constraint.constraint_table) {
           tableData = this.constraintFilter(tableData, objectKeys, constraint);
           console.log(`linkToIndex after constraintFilter `, tableData);
@@ -89,6 +95,7 @@ class TableDrawer extends Component {
       }
     }
     tableData.unshift(objectKeys);
+    console.log(`list to Index `, tableData);
     
     this.setState({
         dataSet: tableData,
@@ -144,18 +151,18 @@ class TableDrawer extends Component {
   // applies filter to each row in data set and constrains data set
   // called in listToIndex 
   constraintFilter = (dataSet, columnNames, constraint) => {
-    //console.log(`in constraintFilter`, this.props.taskConstraints, dataSet);
+    console.log(`in constraintFilter`, constraint, dataSet);
     let columnIndex = columnNames.indexOf(constraint.constraint_column);
-    //console.log(`constraintFilter index`, columnIndex);
-          console.log(`constraint on dataSet present...`);
+    console.log(`constraintFilter index`, columnIndex);
+          //console.log(`constraint on dataSet present...`);
       let thisType = this.typeIt(constraint)
       let filterSet = [];
       for (let row of dataSet){        
         if(this.compareIt(row[columnIndex], constraint, thisType)==true){
-          //console.log(`filter satisfied row`, row);
+          // console.log(`filter satisfied row`, row);
           filterSet.push(row);
         }
-      //console.log(`filterSet in constraint `, filterSet);
+      // console.log(`filterSet in constraint `, filterSet);
       }
     return filterSet
   } 
@@ -164,10 +171,14 @@ class TableDrawer extends Component {
   compareIt = (data, constraint, thisType) => {
     let operator = constraint.constraint_comparison.comparison;
     let value = constraint.constraint_comparison.value;
-    //console.log(`in compareIt data, value`, data, value);
+    // console.log(`in compareIt data, value`, data, constraint, thisType);
     value=this.convertIt(value, thisType);
     data=this.convertIt(data, thisType);
+    console.log(`compare it `, value, data, operator, thisType);
+    
     if (operator==='=' && value==data){
+      console.log(`pass compare`);
+      
       return true
     } else if (operator === '<' && value < data) {
       return true
@@ -189,6 +200,8 @@ class TableDrawer extends Component {
     if (thisType === "timestamp without time zone"){
       console.log(`is timestamp`);
       result = moment(value)
+    } else if (thisType === "boolean"){
+      result=Boolean(value)
     }
     //console.log(`convertIt result `, result, value);
     
@@ -216,7 +229,9 @@ class TableDrawer extends Component {
   }
 
   render() {
-    console.log(`dataset in tableDrawer `, this.state.dataSet);
+    console.log(`state in tableDrawer `, this.state);
+    console.log(`props in tableDrawer `, this.props);
+    
     
     return (
     <section>
