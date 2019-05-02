@@ -10,9 +10,7 @@ class TargetForm extends Component {
         ...this.props.target.modification_value
     }
 
-    handleChange = column => event=>{
-        // console.log(`handlechange target `, event, column);
-        
+    handleChange = column => event=>{        
         this.setState({
             [column]: event.target.value
         });
@@ -20,9 +18,7 @@ class TargetForm extends Component {
 
     handleSave = () =>{
         let target = this.props.target;
-        target.modification_value = this.state;
-        // console.log(`handleSave target `, target);
-        
+        target.modification_value = this.state;        
         this.props.dispatch({ type: 'UPDATE_TARGET_VALUE', payload: target})
     }
 
@@ -45,6 +41,7 @@ class TargetForm extends Component {
         }
         return 'text'
 
+
     }
 
     render(){
@@ -62,6 +59,7 @@ class TargetForm extends Component {
                         margin="dense"
                     />)
                     }
+
                 </form>
 
         return(
