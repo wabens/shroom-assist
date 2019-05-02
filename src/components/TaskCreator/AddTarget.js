@@ -142,7 +142,7 @@ class AddTarget extends Component {
                 select
                 label="Type"
                 value={this.state.target.modification}
-                onChange={this.handleChange('modification')}
+                onChange={this.props.handleChange('modification')}
                 margin="dense"
             >
                 <MenuItem value={'POST'}>Insert</MenuItem>
@@ -162,7 +162,7 @@ class AddTarget extends Component {
                     select
                     label="Table"
                     value={this.state.target.target_table}
-                    onChange={this.handleChange('target_table')}
+                    onChange={this.props.handleChange('target_table')}
                     margin="dense"
                 >
                     <MenuItem key={1} value={'incubator'}>incubator</MenuItem>
@@ -177,7 +177,7 @@ class AddTarget extends Component {
                             disabled = {this.state.saved}
                             multiple
                             value={this.state.target.target_column}
-                            onChange={this.handleChange('target_column')}
+                            onChange={this.props.handleChange('target_column')}
                         >
                             {this.state.currentTable.map((column,i) => (
                                 <MenuItem key={i} value={column.column_name}>
@@ -197,7 +197,7 @@ class AddTarget extends Component {
                         <Select
                             disabled = {this.state.saved}
                             value={this.state.target.target_column}
-                            onChange={this.handleChange('target_column')}
+                            onChange={this.props.handleChange('target_column')}
                         >
                             {this.state.currentTable.map((column,i) => (
                                 <MenuItem key={i} value={column.column_name}>

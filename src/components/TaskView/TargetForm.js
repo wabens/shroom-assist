@@ -22,26 +22,16 @@ class TargetForm extends Component {
         this.props.dispatch({ type: 'UPDATE_TARGET_VALUE', payload: target})
     }
 
-    checkType = (columnName) => {
-        let table = this.props.target.target_table;
-        let tableTypes = [];
-        if (table === 'growing_room'){
-            tableTypes = this.props.reduxState.processDataTypes.growingRoomTypes;
-        } else if (table === 'incubator'){
-            tableTypes = this.props.reduxState.processDataTypes.incubatorTypes;
-        }
+    typeCheck = (columnName) => {
+        let tableTypes = this.state.currentTable
         for (let column of tableTypes) {
-           if (column.column_name === columnName && column.data_type === 'integer') {
-               console.log(`found type`, column);
-               return 'number'
-           } else if (column.column_name === columnName && column.data_type === 'timestamp without time zone') {
-               console.log(`found type`, column);
-               return 'date'
-           }
+            if (column.column_name === columnName && column.data_type === 'integer') {
+                return 'number'
+            } else if (column.column_name === columnName && column.data_type === 'timestamp without time zone') {
+                return 'date'
+            }
         }
         return 'text'
-
-
     }
 
     render(){
@@ -49,17 +39,16 @@ class TargetForm extends Component {
             let renderEl = 
                 <form className={"target-form"}>
                     {this.props && this.props.target.target_column.map(column =>
-                    <TextField
-                        InputLabelProps={{ shrink: true }}
-                        type={this.checkType(column)}
-                        className={"form-field"}
-                        label={column}
-                        value={this.state[column]}
-                        onChange={this.handleChange(column)}
-                        margin="dense"
-                    />)
-                    }
-
+                        <TextField
+                            type={this.typeCheck(column)}
+                            className={"form-field"}
+                            label={column}
+                            value={this.state[column]}
+                            onChange={this.handleChange(column)}
+                            margin="dense"
+                        />  
+                    )}
+                    <button onClick={this.handleSave}>Save</button>
                 </form>
 
         return(

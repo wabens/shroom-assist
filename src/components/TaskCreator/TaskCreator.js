@@ -14,7 +14,20 @@ class TaskCreator extends Component {
     state={
         name: '',
         description: '',
-        targetList: [],
+        targetList: [
+            {
+                target_table: '',
+                modification_value: {},
+                modification: '',
+                target_column: [],
+            },
+            {
+                target_table: '',
+                modification_value: {},
+                modification: '',
+                target_column: [],
+            }
+        ],
         constraintList:[]
     }
 
@@ -24,6 +37,18 @@ class TaskCreator extends Component {
         this.props.dispatch({type: 'GET_INCUBATOR'})
     }
     
+    changeTarget = (field, index) => event =>{
+        index = 0;
+        let targetList = this.state.targetList;
+        let target = this.state.targetList[index];
+        targetList[index] = target;
+        target[field] = event.target.value;
+
+        this.setState({
+            targetList:targetList
+        })
+    }
+
     handleChange = field => event =>{
         console.log(`handleChange `, field, event.target.value);
         
@@ -94,8 +119,8 @@ class TaskCreator extends Component {
                     margin="dense"
                     variant="outlined"
                 />
-                <AddTarget saveTarget={this.saveTarget} editTarget={this.editTarget} listPosition = {this.state.targetList.length}/>
-                <AddTarget saveTarget={this.saveTarget} editTarget={this.editTarget} listPosition = {this.state.targetList.length}/>
+                <AddTarget handleChange={this.changeTarget} listPosition = {0}/>
+                <AddTarget handleChange={this.changeTarget} listPosition = {1}/>
 
                 <AddConstraint saveConstraint={this.saveConstraint} editConstraint={this.editConstraint} listPosition = {this.state.constraintList.length}/>
                 <AddConstraint saveConstraint={this.saveConstraint} editConstraint={this.editConstraint} listPosition = {this.state.constraintList.length}/>
