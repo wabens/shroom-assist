@@ -60,16 +60,6 @@ router.post('/', async (req, res) => {
         client.release()
         
     }
-    // pool.query(queryText, queryValues)
-    //     .then((result) => {
-    //         res.send(result.rows);
-    //         console.log(`added new task `, queryValues);
-
-    //     })
-    //     .catch((err) => {
-    //         console.log('Error completing INSERT task query', err);
-    //         res.sendStatus(500);
-    //     });
 });
 
 
@@ -125,6 +115,21 @@ router.get('/constraint', (req, res) => {
         });
 });
 
+router.delete('/:id', (req, res) => {
+    let queryText = `DELETE FROM "task" WHERE "task_id"=$1;`;
+    let queryValues = [req.params.id];
+    pool.query(queryText, queryValues)
+        .then((result) => {
+            res.sendStatus(200);
+            console.log(`DELETE task`, queryValues);
+
+        })
+        .catch((err) => {
+            console.log('Error completing DELETE task query', err);
+            res.sendStatus(500);
+        });
+
+})
 
 
 module.exports = router;

@@ -49,6 +49,10 @@ class TaskItem extends Component {
         }
     }
 
+    handleDelete = (task) => {
+        this.props.dispatch({type: 'DELETE_TASK', payload: task})
+    }
+
     render(){
         let taskTargets=this.findTargets();
         let taskConstraints=this.findConstraints();
@@ -64,6 +68,7 @@ class TaskItem extends Component {
                     <TargetForm key={target.target_id} target = {target}/>
                 )}
                 <TableDrawer taskConstraints={taskConstraints} />
+                <button onClick ={()=>this.handleDelete(this.props.task)}>Delete</button>
                 <button onClick={()=>this.handleComplete(taskTargets)}>Complete</button>
             </ExpansionPanel>
         )
