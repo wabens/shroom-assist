@@ -13,3 +13,8 @@ p {
     flex-wrap: wrap;
     background-color: white
 }
+
+.task-list{
+    overflow-y: scroll;
+    height: 1000px
+}

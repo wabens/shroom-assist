@@ -7,7 +7,12 @@ import './TaskView.css'
 // form takes value that will modify the database
 class TargetForm extends Component {
     state = {
-        ...this.props.target.modification_value
+        modification_value:{
+            ...this.props.target.modification_value
+        },
+        importSelect: false,
+        rowId: 'pick a row'
+
     }
 
     handleChange = column => event=>{        
@@ -18,7 +23,7 @@ class TargetForm extends Component {
 
     handleSave = () =>{
         let target = this.props.target;
-        target.modification_value = this.state;        
+        target.modification_value = this.state.modification_value;        
         this.props.dispatch({ type: 'UPDATE_TARGET_VALUE', payload: target})
     }
 
@@ -40,30 +45,58 @@ class TargetForm extends Component {
            }
         }
         return 'text'
+    }
 
+    handleImport = (field) => {
 
+        let selected = this.props.reduxState.dataSelected.dataSelected.rowData && this.props.reduxState.dataSelected.dataSelected.rowData[0] || 'pick a row';
+        console.log(`import reduxstate `, selected);
+        this.setState({
+            importSelect: true,
+            rowId: selected
+        })
+        
     }
 
     render(){
-
-            let renderEl = 
-                <form className={"target-form"}>
-                    {this.props && this.props.target.target_column.map(column =>
+        let renderEl = 
+            (this.props && this.props.target.target_column.map(column =>
+                <>
                     <TextField
                         InputLabelProps={{ shrink: true }}
                         type={this.checkType(column)}
                         className={"form-field"}
                         label={column}
-                        value={this.state[column]}
+                        value={this.state.modification_value[column]}
                         onChange={this.handleChange(column)}
                         margin="dense"
-                    />)
-                    }
-
-                </form>
-
+                    />
+                    {this.props.target.modification==='PUT' && <button onClick = {()=>this.handleImport(column)}>Import selected</button>}
+                </>
+                )
+            );
+        let rowEl = null;
+        
+        console.log(`targetFomr state `, this.state);
+        
         return(
-            renderEl
+        <form className={"target-form"}>
+            {this.state.importSelect && 
+            // <p>{this.props.reduxState.dataSelected.dataSelected}</p>
+                <TextField
+                        InputLabelProps={{ shrink: true }}
+                        className={"form-field"}
+                        label={'row id'}
+                        value = {
+                            this.state.rowId
+                        }
+                        // onChange={this.handleChange(column)}
+                        margin="dense"
+                />  
+            }
+            {renderEl}
+        </form>
+
         )
     }
 }

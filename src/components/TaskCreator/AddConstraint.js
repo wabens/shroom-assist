@@ -70,8 +70,8 @@ class AddConstraint extends Component {
                     >
                         <MenuItem value={'>'}> > </MenuItem>
                         <MenuItem value={'>='}>>=</MenuItem>
-                        <MenuItem value={'<'}>></MenuItem>
-                        <MenuItem value={'<='}>>=</MenuItem>
+                        <MenuItem value={'<'}>&lt;</MenuItem>
+                        <MenuItem value={'<='}>&lt;=</MenuItem>
                         <MenuItem value={'='}>=</MenuItem>
                     </TextField>
             </>    
