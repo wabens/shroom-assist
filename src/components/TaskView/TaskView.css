@@ -18,3 +18,7 @@ p {
     overflow-y: scroll;
     height: 1000px
 }
+
+.target-expand{
+    padding: 15px;
+}

@@ -59,7 +59,7 @@ class TaskItem extends Component {
         console.log(`in render taskConstraints`, taskConstraints);
         
         return(
-            <ExpansionPanel>
+            <ExpansionPanel className={'target-expand'}>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                     <p>{this.props.task.task_name}</p>
                     <p>{this.props.task.description}</p>

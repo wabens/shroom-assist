@@ -34,7 +34,7 @@ class TaskCreator extends Component {
     }
 
     handleSubmit = (event) => {
-        event.preventDefault();       
+        // event.preventDefault();       
   
         this.props.dispatch({type: 'ADD_TASK', payload: this.state})
     }
@@ -69,6 +69,8 @@ class TaskCreator extends Component {
         console.log(`in editConstraint`, this.state.constraintList);
 
     }
+
+ 
 
     render() {
         console.log(`taskcreator state `, this.state);
