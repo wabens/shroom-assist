@@ -54,7 +54,7 @@ class LoginPage extends Component {
                     variant='outlined'
                   />
                   <TextField
-                    type="text"
+                    type="password"
                     className={"login-field"}    
                     label={'password'}
                     value={this.state.password}

@@ -55,11 +55,29 @@ function* deleteTask(action) {
       alert('Sorry error deleting task.')
   }
 }
+
+function* completeTask(action) {
+  try {
+    console.log(`update `, action.payload);
+
+    yield axios.put(`api/task/${action.payload.task_id}`);
+    
+    yield put({ type: 'GET_TASK_LIST'});
+    yield put({ type: 'GET_TARGET_LIST'});
+    yield put({ type: 'GET_CONSTRAINT_LIST'});
+
+  } catch (error) {
+      console.log('Error deleting', error);
+      alert('Sorry error deleting task.')
+  }
+}
+
 function* getTaskInfoSaga() {
   yield takeLatest('GET_TASK_LIST', getTaskList);
   yield takeLatest('GET_TARGET_LIST', getTargetList);
   yield takeLatest('GET_CONSTRAINT_LIST', getConstraintList);
   yield takeLatest('DELETE_TASK', deleteTask);
+  yield takeLatest('COMPLETE_TASK', completeTask)
 
 }
 

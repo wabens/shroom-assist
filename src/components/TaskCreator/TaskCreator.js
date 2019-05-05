@@ -34,9 +34,15 @@ class TaskCreator extends Component {
     }
 
     handleSubmit = (event) => {
-        // event.preventDefault();       
+        event.preventDefault();       
   
         this.props.dispatch({type: 'ADD_TASK', payload: this.state})
+        this.setState({
+            name: '',
+            description: '',
+            targetList: [],
+            constraintList:[]
+        })
     }
 
     saveTarget = target => {
@@ -96,12 +102,30 @@ class TaskCreator extends Component {
                     margin="dense"
                     variant="outlined"
                 />
-                <AddTarget saveTarget={this.saveTarget} editTarget={this.editTarget} listPosition = {this.state.targetList.length}/>
-                <AddTarget saveTarget={this.saveTarget} editTarget={this.editTarget} listPosition = {this.state.targetList.length}/>
-
-                <AddConstraint saveConstraint={this.saveConstraint} editConstraint={this.editConstraint} listPosition = {this.state.constraintList.length}/>
-                <AddConstraint saveConstraint={this.saveConstraint} editConstraint={this.editConstraint} listPosition = {this.state.constraintList.length}/>
-
+                <AddTarget 
+                    saveTarget={this.saveTarget} 
+                    editTarget={this.editTarget} 
+                    listPosition = {this.state.targetList.length} 
+                    list={this.state.targetList}
+                />
+                <AddTarget 
+                    saveTarget={this.saveTarget} 
+                    editTarget={this.editTarget} 
+                    listPosition = {this.state.targetList.length} 
+                    list={this.state.targetList}
+                />
+                <AddConstraint 
+                    saveConstraint={this.saveConstraint} 
+                    editConstraint={this.editConstraint} 
+                    listPosition = {this.state.constraintList.length}
+                    list={this.state.constraintList}
+                />
+                <AddConstraint 
+                    saveConstraint={this.saveConstraint} 
+                    editConstraint={this.editConstraint} 
+                    listPosition = {this.state.constraintList.length}
+                    list={this.state.constraintList}
+                />
                 <button onClick={this.handleSubmit}>Add task</button>
             </form>
         </section>

@@ -4,30 +4,33 @@
 
 .dataCell{
     word-wrap: break-word;
-    border: solid grey .5px;
+    border: solid lightgrey 1px;
     border-spacing: border-box;
 }
 
 .headerCell{
     border-spacing: border-box;
     word-wrap: break-word;
-    border: solid grey .5px;
+    overflow: auto;
+    border: solid black .5px;
 }
 
-.selectCell{
+/* .selectCell{
     border-spacing: border-box;
-    border: ridge #6FA0F6 3px;
-}
+    background-color: lightblue;
+    border: solid blue 3px;
+} */
 
 .selectRow{
     background-color: lightblue;
     word-wrap: break-word;
     border: solid grey .5px;
     border-spacing: border-box;
+    overflow: auto;
 }
 
 .selectColumn{
-    background-color: lightblue;
+    /* background-color: lightblue; */
     word-wrap: break-word;
     border: solid grey .5px;
     border-spacing: border-box;

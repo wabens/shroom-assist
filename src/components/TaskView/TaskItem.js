@@ -47,6 +47,7 @@ class TaskItem extends Component {
 
             }
         }
+        this.props.dispatch({type: 'COMPLETE_TASK', payload:this.props.task});
     }
 
     handleDelete = (task) => {
@@ -56,21 +57,27 @@ class TaskItem extends Component {
     render(){
         let taskTargets=this.findTargets();
         let taskConstraints=this.findConstraints();
-        console.log(`in render taskConstraints`, taskConstraints);
-        
+        let activeStatus = '';
+        console.log(`in render task`, this.props.task.active);
+        if(this.props.task.active===false){
+            console.log(`active task`);
+            activeStatus='inactive';
+        }
         return(
-            <ExpansionPanel className={'target-expand'}>
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                    <p>{this.props.task.task_name}</p>
-                    <p>{this.props.task.description}</p>
-                </ExpansionPanelSummary>
-                {taskTargets.map( target => 
-                    <TargetForm key={target.target_id} target = {target}/>
-                )}
-                <TableDrawer taskConstraints={taskConstraints} />
-                <button onClick ={()=>this.handleDelete(this.props.task)}>Delete</button>
-                <button onClick={()=>this.handleComplete(taskTargets)}>Complete</button>
-            </ExpansionPanel>
+            <div className={activeStatus}>
+                <ExpansionPanel className={'target-expand'}>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                        <p>{this.props.task.task_name}</p>
+                        <p>{this.props.task.description}</p>
+                    </ExpansionPanelSummary>
+                    {taskTargets.map( target => 
+                        <TargetForm key={target.target_id} target = {target}/>
+                    )}
+                    <TableDrawer taskConstraints={taskConstraints} />
+                    <button onClick ={()=>this.handleDelete(this.props.task)}>Delete</button>
+                    <button onClick={()=>this.handleComplete(taskTargets)}>Complete</button>
+                </ExpansionPanel>
+            </div>
         )
     }
 

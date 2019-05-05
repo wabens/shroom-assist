@@ -22,3 +22,7 @@ p {
 .target-expand{
     padding: 15px;
 }
+
+.inactive{
+ opacity: .3;
+}

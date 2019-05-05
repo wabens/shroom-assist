@@ -71,7 +71,12 @@ class TargetForm extends Component {
                         onChange={this.handleChange(column)}
                         margin="dense"
                     />
-                    {this.props.target.modification==='PUT' && <button onClick = {()=>this.handleImport(column)}>Import selected</button>}
+                    {this.props.target.modification==='PUT' && 
+                    <div>
+                        <button className={'default'} onClick = {()=>this.handleImport(column)}>
+                            Import selected
+                        </button>
+                    </div>}
                 </>
                 )
             );

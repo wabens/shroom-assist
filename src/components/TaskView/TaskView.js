@@ -30,6 +30,7 @@ class TaskView extends Component {
                 <h1>Tasks</h1>
                 <div className={'task-list'}>
                     {taskInfo.taskList.map( task => 
+                    
                             <TaskItem key={task.task_id} task={task} taskInfo={taskInfo}/>
                     )}
                 </div>

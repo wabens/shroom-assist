@@ -42,8 +42,9 @@ class SmartTable extends Component {
       cellStyle='selectRow';
     }
 
-    if (columnIndex === this.props.reduxState.dataSelected.dataSelected.column){
-      cellStyle='selectColumn'
+    if (columnIndex === this.props.reduxState.dataSelected.dataSelected.row && 
+        rowIndex===this.props.reduxState.dataSelected.dataSelected.column) {
+      cellStyle = 'selectCell'
     }
     
 
@@ -126,10 +127,10 @@ class SmartTable extends Component {
             fixedRowCount={1}
             cellRenderer={this.cellRenderer}
             styleTopRightGrid={{
-              border: 'solid blue 1px',
+              border: 'solid black 1px',
             }}
             styleBottomLeftGrid={{
-              border: 'solid blue 1px',
+              border: 'solid black 1px',
             }}
           />
         )}

@@ -174,7 +174,7 @@ class TableDrawer extends Component {
     // console.log(`in compareIt data, value`, data, constraint, thisType);
     value=this.convertIt(value, thisType);
     data=this.convertIt(data, thisType);
-    console.log(`compare it `, value, data, operator, thisType);
+    // console.log(`compare it `, value, data, operator, thisType);
     
     if (operator==='=' && value==data){
       console.log(`pass compare`);
