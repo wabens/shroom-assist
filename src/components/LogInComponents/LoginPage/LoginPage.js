@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import TextField from '@material-ui/core/TextField';
+
 
 class LoginPage extends Component {
   state = {
@@ -40,37 +42,32 @@ class LoginPage extends Component {
             {this.props.errors.loginMessage}
           </h2>
         )}
-        <form onSubmit={this.login}>
-          <h1>Login</h1>
-          <div>
-            <label htmlFor="username">
-              Username:
+        <form className = {'login-form'} onSubmit={this.login}>
+          <div className = {'login-box'}>
+                  <TextField
+                    type="text"
+                    className={"login-field"}    
+                    label={'username'}
+                    value={this.state.username}
+                    onChange={this.handleInputChangeFor('username')}
+                    margin="dense"
+                    variant='outlined'
+                  />
+                  <TextField
+                    type="text"
+                    className={"login-field"}    
+                    label={'password'}
+                    value={this.state.password}
+                    onChange={this.handleInputChangeFor('password')}
+                    margin="dense"
+                    variant='outlined'
+                  />
               <input
-                type="text"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleInputChangeFor('username')}
+                className="log-in"
+                type="submit"
+                name="submit"
+                value="Log In"
               />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="password">
-              Password:
-              <input
-                type="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleInputChangeFor('password')}
-              />
-            </label>
-          </div>
-          <div>
-            <input
-              className="log-in"
-              type="submit"
-              name="submit"
-              value="Log In"
-            />
           </div>
         </form>
         <center>

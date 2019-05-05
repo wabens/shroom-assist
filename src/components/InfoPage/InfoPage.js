@@ -8,7 +8,7 @@ import TaskCreator from '../TaskCreator/TaskCreator';
 
 const InfoPage = () => (
   <div>
-    <TableDrawer/>
+    {/* <TableDrawer/> */}
     <TaskCreator/>
 
   </div>

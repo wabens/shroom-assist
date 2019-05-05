@@ -20,3 +20,9 @@
 .taskDescription{
     width: 70%
 }
+
+.task-box{
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}

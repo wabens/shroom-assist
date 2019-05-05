@@ -74,7 +74,7 @@ class TaskCreator extends Component {
         console.log(`taskcreator state `, this.state);
         
         return(
-        <section>
+        <section className={'task-box'}>
             <h1>Task Creator</h1>
             <form className={"taskForm"}>
                 <TextField

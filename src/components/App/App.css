@@ -8,13 +8,32 @@ body {
     margin: 50px;
 }
 
-form {
-    background-color: #dbd5d5;
-    width: 30%;
-    height: 250px;
+.login-form {
+    background-image: url(../../images/shroom-trans.png);
+    background-size: cover;
+    width: 600px;
+    height: 540px;
     margin: 20px auto;
     padding: 25px;
     border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-content: center; */
+}
+
+.login-box {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    width: 50%;
+    justify-content: center;
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 40px;
+    padding: 20px;
+
 }
 
 input {
@@ -23,7 +42,7 @@ input {
 }
 
 .log-in, .log-out, .register {
-  background-color: #00acb0;
+  background-color: #1C3865;
   border-radius: 4px;
   color: #f8f8f8;
   min-height: 50px;
@@ -33,7 +52,7 @@ input {
 }
 
 .log-in:hover, .log-out:hover, .register:hover {
-  background-color: #008183;
+  background-color: #0A234A;
 }
 
 /* This line makes the "Register" and "Login" buttons look like links */
@@ -46,4 +65,11 @@ input {
     outline:0;
     border-bottom:1px solid #444; 
     cursor: pointer;
+ 
 }
+
+.login-field{
+    color: white
+}
+
+
