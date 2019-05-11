@@ -1,6 +1,8 @@
 # Shroom Assist
 
-A module for a farm management application. Allows an admin to create a task which modifies a database quantifying growing procedures. Admin translates task from a natural language description to a database modification and filter. This is acheived in the task creator through the addition of targets (a PUT or POST to growing proccess tables) and contstraints (filters data in task view). Also features a rough spreadsheet UI for displaying, sorting, selecting data and importing data to task viewer. I did some experimentation with generic structure allowing flexibility and the addition of growing process tables, this ended up lending some instability and security issues to the program but was a fun challenge. The concept of this module is to be integrated into a larger application where it could generate tasks as a template rathe than tasks directly, allowing for automatic task generation on a time course or at certain production targets.
+A module for a farm management application. Allows an admin to create a task which modifies a database quantifying growing procedures. Admin translates task from a natural language description to a database modification and filter. This is acheived in the task creator through the addition of targets (a PUT or POST to growing proccess tables) and contstraints (filters data in task view). Also features a rough spreadsheet UI for displaying large data sest, sorting, selecting data and importing selected data to task viewer. 
+
+I did some experimentation with generic structure allowing flexibility and the addition of growing process tables, this ended up lending some instability and security issues to the program but was a fun challenge. The concept of this module is to be integrated into a larger application where it could generate tasks as a template rathe than tasks directly, allowing for automatic task generation on a time course or at certain production targets.
 
 ## Built With
 
@@ -44,7 +46,8 @@ Run things locally, in a development environment.
 
 ## Screen Shot
 
-Include one or two screen shots of your project here (optional). Remove if unused.
+![task_view](/screenshots/task_view.png)
+![task_creator](/screenshots/task_creator.png)
 
 ## Documentation
 
