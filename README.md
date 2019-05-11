@@ -1,6 +1,6 @@
-# Name of Application
+# Shroom Assist
 
-One Paragraph of project description goes here. Link to the live version of the app if it's hosted on Heroku.
+A module for a farm management application. Allows an admin to create a task which modifies a database quantifying growing procedures. Admin translates task from a natural language description to a database modification and filter. This is acheived in the task creator through the addition of targets (a PUT or POST to growing proccess tables) and contstraints (filters data in task view). Also features a rough spreadsheet UI for displaying, sorting, selecting data and importing data to task viewer. I did some experimentation with generic structure allowing flexibility and the addition of growing process tables, this ended up lending some instability and security issues to the program but was a fun challenge. The concept of this module is to be integrated into a larger application where it could generate tasks as a template rathe than tasks directly, allowing for flexible automatic task generation and integrated data entry.
 
 ## Built With
 
