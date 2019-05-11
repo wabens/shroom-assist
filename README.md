@@ -1,8 +1,9 @@
 # Shroom Assist
 
-A module for a farm management application. Allows an admin to create a task which modifies a database quantifying growing procedures. Admin translates task from a natural language description to a database modification and filter. This is acheived in the task creator through the addition of targets (a PUT or POST to growing proccess tables) and contstraints (filters data in task view). Also features a rough spreadsheet UI for displaying, sorting, selecting data and importing data to task viewer. I did some experimentation with generic structure allowing flexibility and the addition of growing process tables, this ended up lending some instability and security issues to the program but was a fun challenge. The concept of this module is to be integrated into a larger application where it could generate tasks as a template rathe than tasks directly, allowing for flexible automatic task generation and integrated data entry.
+A module for a farm management application. Allows an admin to create a task which modifies a database quantifying growing procedures. Admin translates task from a natural language description to a database modification and filter. This is acheived in the task creator through the addition of targets (a PUT or POST to growing proccess tables) and contstraints (filters data in task view). Also features a rough spreadsheet UI for displaying, sorting, selecting data and importing data to task viewer. I did some experimentation with generic structure allowing flexibility and the addition of growing process tables, this ended up lending some instability and security issues to the program but was a fun challenge. The concept of this module is to be integrated into a larger application where it could generate tasks as a template rathe than tasks directly, allowing for automatic task generation on a time course or at certain production targets.
 
 ## Built With
+
 * React.js
 * React-redux
 * React-saga
@@ -32,7 +33,7 @@ Run things locally, in a development environment.
 ### Installing
 
 1. Download repo
-2. Create database called 'feedback_form' and run queries in data.sql file
+2. Create database in Postico called 'mushroom_farm' and run queries in data.sql file
 3. Install dependancies 
 `npm install`
 4. Start express server 
