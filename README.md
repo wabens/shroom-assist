@@ -47,18 +47,19 @@ Run things locally, in a development environment.
 ## Screen Shot
 
 ![task_view](/screenshots/task_view.png)
-![task_creator](/screenshots/task_creator.png)
+![task_creator](/screenshots/task_create.png)
 
 ## Documentation
-
-Link to a read-only version of your scope document or other relevant documentation here (optional). Remove if unused.
 
 ### Completed Features
 
 High level list of items completed.
 
-- [x] Feature a
-- [x] Feature b
+- [x] CRUD for tasks
+- [x] Flexible data based task creation
+- [x] Ability to view large data collections with low lag
+- [x] Modifiy database and inactivate task on completion
+- [x] 
 
 ### Next Steps
 
