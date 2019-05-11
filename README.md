@@ -1,8 +1,8 @@
 # Shroom Assist
 
-A module for a farm management application. Allows an admin to create a task which modifies a database quantifying growing procedures. Admin translates task from a natural language description to a database modification and filter. This is acheived in the task creator through the addition of targets (a PUT or POST to growing proccess tables) and contstraints (filters data in task view). Also features a rough spreadsheet UI for displaying large data sest, sorting, selecting data and importing selected data to task viewer. 
+Module for a farm management application. Allows an admin to create a task which modifies a database quantifying growing procedures. Admin translates task from a natural language description to a database modification and filter. This is acheived in the task creator through the addition of targets (a PUT or POST to growing proccess tables) and contstraints (filters data in task view). Also features a rough spreadsheet UI for displaying large data sest, sorting, selecting data and importing selected data to task viewer. 
 
-I did some experimentation with generic structure allowing flexibility and the addition of growing process tables, this ended up lending some instability and security issues to the program but was a fun challenge. The concept of this module is to be integrated into a larger application where it could generate tasks as a template rathe than tasks directly, allowing for automatic task generation on a time course or at certain production targets.
+I did some experimentation with generic structure allowing flexibility with the addition of growing process tables, this ended up adding some instability and security issues to the program but was a fun challenge. The concept of this module is to be integrated into a larger application where it could generate tasks as a template rathe than tasks directly, allowing for automatic task generation on a time course or at certain production targets.
 
 ## Built With
 
@@ -57,24 +57,18 @@ Run things locally, in a development environment.
 High level list of items completed.
 
 - [x] CRUD for tasks
-- [x] Flexible data based task creation
+- [x] Flexible database informed task creation
 - [x] Ability to view large data collections with low lag
 - [x] Modifiy database and inactivate task on completion
-- [x] 
 
 ### Next Steps
 
 Features that you would like to add at some point in the future.
-
-- [ ] Feature c
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Authors
-
-* Name of author(s)
+- [ ] Stronger styling and UI design
+- [ ] Scheduling
+- [ ] Features based on authorization level
+- [ ] Data visualization
+- [ ] Template structure
 
 
 ## Acknowledgments
