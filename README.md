@@ -47,6 +47,7 @@ Run things locally, in a development environment.
 ## Screen Shot
 
 ![task_view](/screenshots/task_view.png)
+
 ![task_creator](/screenshots/task_create.png)
 
 ## Documentation
