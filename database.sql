@@ -84,3 +84,21 @@ CREATE TABLE "growing_room"
     "notes" VARCHAR(1000),
     "active" BOOLEAN
 );
+
+-- Example of a task set
+-- Test 1: Tests a task completion resulting in a POST. Uses two constraints to activate 
+
+INSERT INTO "task" ("task_name", "description", "create_date", "active", "creator")
+VALUES ('Incubator to growing room', 'find pallets older than 30 days from the incubator, and transfer to carts in the growing room', current_timestamp, 'false', '1');
+
+INSERT INTO "constraint" ("task_id", "constraint_table", "constraint_column", "constraint_comparison")
+VALUES ('1', 'incubator', 'active', '{"comparison": "=", "value":true}');
+
+INSERT INTO "constraint" ("task_id", "constraint_table","constraint_column", "constraint_comparison")
+VALUES ('1', 'incubator', 'pallet_age','{"comparison": "<=", "value": 30}');
+
+INSERT INTO "target" ("task_id", "target_table", "target_column", "modification_value", "modification", "target_complete")
+VALUES ('1', 'growing_room', ARRAY ['id', 'cart_name', 'start_date', 'pallet', 'first_room', 'second_room', 'second_transfer', 'compost_date', 'notes', 'active'], '{"cart_name":1000,"start_date":"","pallet":"100A, 101B, 101C","first_room":1,"second_room":null,"second_transfer":null,"compost_date":null,"notes":"","active":true}', 'POST', 'false');
+
+INSERT INTO "target" ("task_id", "target_table", "target_column", "modification_value", "modification", "target_complete")
+VALUES ('1', 'incubate', ARRAY ['active'], '{"row_id": null,"active": false}', 'PUT', 'false');
