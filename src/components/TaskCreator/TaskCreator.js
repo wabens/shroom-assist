@@ -76,7 +76,12 @@ class TaskCreator extends Component {
 
     }
 
- 
+    demoFillText=()=>{
+        this.setState({
+            name: 'Transfer to growing room',
+            description: 'Transfer mushrooms from the incubator to the growing room. Find entries in the incubator database that are active and older than 30 days. Create a new row for the transfer in the growing room database.'
+        })
+    }
 
     render() {
         console.log(`taskcreator state `, this.state);
@@ -127,6 +132,7 @@ class TaskCreator extends Component {
                     list={this.state.constraintList}
                 />
                 <button onClick={this.handleSubmit}>Add task</button>
+                <button className='hidden' onClick={this.demoFillText}></button>
             </form>
         </section>
         )

@@ -1,8 +1,7 @@
+-- This file does not include any data informing a growing proccess.
+-- I do not feel comfortable publicizing Mississippi Mushroom data.
+-- Howerever queries for creating similar data tables is included.
 
--- USER is a reserved keyword with Postgres
--- You must use double quotes in every query that user is in:
--- ex. SELECT * FROM "user";
--- Otherwise you will have errors!
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
     "username" VARCHAR (80) UNIQUE NOT NULL,
@@ -46,28 +45,42 @@ CREATE TABLE "task"
     "active" BOOLEAN NOT NULL,
     "creator" INT REFERENCES "user"
 );
---need to create a single column for 'pallet_name' in incubator
---SELECT * FROM "growing_room"  
---JOIN "pallet_cart" ON "pallet_cart"."cart_id" = "growing_room"."id"
---JOIN "incubator" ON "pallet_cart"."pallet_name" = "incubator";
 
+-- Growing process tables
+CREATE TABLE "incubator"
+(
+    "id" SERIAL PRIMARY KEY,
+    "pallet_num" INTEGER,
+    "group" VARCHAR(100),
+    "bag_count" INTEGER,
+    "pallet_age" INTEGER,
+    "species" VARCHAR(200),
+    "final_bag_count" INTEGER,
+    "creation_date" TIMESTAMP,
+    "cart_transfer" VARCHAR(200),
+    "active" BOOLEAN,
+    "uncolonized_count" INTEGER,
+    "none_count" INTEGER,
+    "none_type" VARCHAR(100),
+    "red_count" INTEGER,
+    "red_type" VARCHAR(100),
+    "green_count" INTEGER,
+    "green_type" VARCHAR(100),
+    "blue_count" INTEGER,
+    "blue_type" VARCHAR(100),
+    "transfer_count" INTEGER
+);
 
-                -------------------------------------TEST CASES-------------------------------------
---Data download date is approximatley 4/15/19
-
---Test 1: Tests a task completion resulting in a POST, and a PUT. Uses two constraints to activate 
-INSERT INTO "task" ("task_name", "description", "create_date", "active", "creator")
-VALUES ('Incubator to growing room', 'find pallets older than 30 days from the incubator, and 
-transfer to carts in the growing room', current_timestamp, 'false', '1');
-
-INSERT INTO "constraint" ("task_id", "constraint_value", "constraint_table", "constraint_column", "constraint_statement")
-VALUES ('1', true, 'incubator', 'active', '=');
-
-INSERT INTO "constraint" ("task_id", "constraint_value", "constraint_table", "constraint_column", "constraint_statement")
-VALUES ('1', '30', 'incubator', 'pallet_age', '>=');
-
-INSERT INTO "target" ("task_id", "target_table", "modification_value", "modification", "target_complete")
-VALUES ('1', 'growing_room','{"cart_name":1000,"start_date":"","pallet":"100A, 101B, 101C","first_room":1,"second_room":null,"second_transfer":null,"compost_date":null,"notes":"","active":true}', 'POST', 'false');
-
-INSERT INTO "target" ("task_id", "target_table", "modification_value", "modification", "target_complete")
-VALUES ('1', 'incubate', '{"active": false}', 'PUT', 'false');
+CREATE TABLE "growing_room"
+(
+    "id" SERIAL PRIMARY KEY,
+    "cart_id" INTEGER,
+    "start_date" TIMESTAMP,
+    "pallet" VARCHAR(1000),
+    "1st_room" INTEGER,
+    "2nd_room" INTEGER,
+    "2nd_transfer" TIMESTAMP,
+    "compost_date" TIMESTAMP,
+    "notes" VARCHAR(1000),
+    "active" BOOLEAN
+);
