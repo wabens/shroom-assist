@@ -4,6 +4,8 @@ Module for a farm management application. Allows an admin to create a task which
 
 I did some experimentation with generic structure allowing flexibility with the addition of growing process tables, this ended up adding some instability and security issues to the program but was a fun challenge. The concept of this module is to be integrated into a larger application where it could generate tasks as a template rathe than tasks directly, allowing for automatic task generation on a time course or at certain production targets.
 
+Inspired by my time at [Mississpippi Mushrooms](https://mississippimushrooms.com/).
+
 ## Built With
 
 * React.js
